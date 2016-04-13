@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+<head>
+{% load staticfiles %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>家家订餐</title>
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/index.css' %}">
+<link rel="stylesheet" href="{% static 'DiningServer/css/dom.css' %}">
+<script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
+<style>
+    html,body{
+        background: #fff;
+    }
+</style>
+</head>
+<body>
+<div class="swiper-position" id="dome1">
+    <div class="positionleft">
+        <span class="position-img"></span>
+        {% if house %}
+            <a href="javascript:;" class="position-text" style="line-height:.353125rem">{{ house.name }}</a>
+        {% else %}
+            <a href="javascript:;" class="position-text">家家订餐</a>
+        {% endif %}
+        <p class="position-paragraph"><a href="http://xiangeqwd.9xi.com/DiningServer/switch/" style=" display: block; line-height: .4rem;">(点击更换门店)</a></p>
+    </div>
+    <div class="positionright">
+        <img src="{% static 'DiningServer/images/index/phone.png' %}" id="btn-phone">
+        <p class="btn-ct">
+            <a href="http://xiangeqwd.9xi.com/DiningServer/getHouseJudge/?house_id={{house.house_id}}"><img src="{% static 'DiningServer/images/index/comorder.png' %}" id="btn-com"><span>评价</span></a>
+        </p>
+    </div>
+</div>
+
+<div class="index-bg"></div>
+
+
+<div class="index-content">
+
+
+    <div class="nav-lf">
+        <ul id="nav">
+            {% for category in categorys %}
+                {% if forloop.first %}
+                    <li data-href="#st{{ forloop.counter}}" class="current"><p id="{{ category.category_id }}">{{ category.category }}</p><b></b></li>
+                {% else %}
+                    <li data-href="#st{{ forloop.counter}}"><p id="{{ category.category_id }}">{{ category.category }}</p><b>1</b></li>
+                {% endif %}
+            {% empty %}
+                <li class="current"><a href="#st1">分类1</a><b>1</b></li>
+                <li><a href="#st2">分类2</a><b>1</b></li>
+                <li><a href="#st3">分类3</a><b>1</b></li>
+                <li><a href="#st4">分类4</a><b>1</b></li>
+            {% endfor %}
+
+        </ul>
+    </div>
+    <div id="container" class="container">
+      {% for meal_list in meals %}
+      <div class="section" id="st{{ forloop.counter }}">
+      <!--  在这里填充section的内容  -->
+
+         <section class="container-divzw"></section>
+        {% for meal in meal_list %}
+            <div class="prt-lt" id="{{ meal.meal_id }}">
+
+                <!-- 图片 -->
+
+                {% if meal.avatar_url %}
+                    <div class="lt-lt">
+                        <a href="/DiningServer/getMealDetail/?meal_id={{meal.meal_id}}&amp;house_id={{house.house_id}}"><img class="lazy-img" data-src="{{ meal.avatar_url }}" src="{% static 'DiningServer/images/index/loading.gif' %}" /></a>
+                        <!-- <a href="javascript:;" class="boxtext"><span>已有<strong>{{ meal.judge_count }}</strong>人评价</span></a> -->
+                    </div>
+                {% else %}
+                    <div class="lt-lt"><img class="lazy-img" src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
+                    <div class="lt-lt"> 
+                        <img class="lazy-img" src="{% static 'DiningServer/images/index/prt_1.jpg' %}">
+                        <a href="javascript:;" class="boxtext"><span>已有<strong>12</strong>人评价</span></a>
+                    </div>
+                {% endif %}
+
+                <div class="lt-ct">
+                    <p>{{ meal.meal_name }}</p>
+                    <p class="pr2">销量<span class="text">{{ meal.sold_count }}</span>份<span>&nbsp;&nbsp;好评14</span></p>
+                    <p class="pr">¥<span class="price">{{ meal.meal_price }}</span></p>
+                </div>
+                <div class="lt-rt">
+                    <p class="di-name" style="display:none;">{{ meal.meal_name }}</p>
+                    <input type="button" class="minus"  value="-">
+                    <input type="text" class="result" value="0" disabled="true">
+                    <input type="button" class="add" value="+">
+                </div>
+            </div>
+          {% empty %}
+        {% endfor %}
+      </div>
+      {% endfor %}
+
+</div>
+
+        <div class="pos-bg"></div>
+        <div class="pos-phone" id="phone">
+            <p class="pos-pa">联系电话</p>
+            <p class="btn-close" id="btn-close">×</p>   
+            <a href="tel:{{ house.phone }}" class="pos-pt" style="display:block;">{{ house.phone }}</a>
+        </div>
+
+</div>
+<div style="height:1.15rem"></div>
+<div id="footer-box">
+	<div class="ft-lt" id="ft-lt">
+        <img src="{% static 'DiningServer/images/index/shop.png' %}" class="ft-lt-img" id="cart-btn">
+        <p class="footer-p">总计:<span id="total" class="total">0.00元</span><span class="nm">(<label class="share"></label>份)</span></p>
+        <span class="share" id="ft-span"></span>
+    </div>
+    <div class="ft-rt" id="change-success">确认订单</div>
+</div>
+
+
+<!--跳转按钮-->
+<div class="pos-fixed">
+    <a class="pos-ordering"  href="http://xiangeqwd.9xi.com/DiningServer/index/">
+        <img src="{% static 'DiningServer/images/index/log1a.png' %}" class="post-bg">
+        <p class="pos-size2">订餐</p>
+    </a>
+
+    <a  class="pos-order" href="http://xiangeqwd.9xi.com/DiningServer/getOrdersByType/">
+        <img src="{% static 'DiningServer/images/index/log2.png' %}" class="post-bg2">
+        <p class="pos-size">订单</p>
+    </a>
+
+    <a class="pos-page" href="http://xiangeqwd.9xi.com/DiningServer/listMyDetailInfoPage/">
+        <img src="{% static 'DiningServer/images/index/log3.png' %}" class="post-bg3">
+        <p class="pos-size">地址</p>
+    </a>
+
+</div>
+
+<!-- 购物车 -->
+<div class="ft-shop" id="ft-shop">
+    <p class="shop-top">
+        <span><i></i>&nbsp;&nbsp;&nbsp;购物车</span>
+        <span id="shop-clear"><i></i>清空购物车</span>
+    </p>
+    <ul class="shop-ul" id="shop-ul"><!-- 
+        <li>
+            <span><i class="ul-i"></i><i class="ul-meal">营养双拼套餐</i></span>
+            <div class="shop-div">
+                <input type="button" class="minus-a"  value="-">
+                <input type="text" class="result-a" value="0" disabled="true">
+                <input type="button" class="add-a" value="+">
+            </div>
+        </li> -->
+    </ul>
+</div>
+
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/mobile.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/fastclick.js' %}"></script>
+
+
+<script type="text/javascript">
+//图片数组
+var src_list = {
+    {% for meal_list in meals %}
+        {% for item in meal_list %}
+            "{{ item.meals_id }}":"{{ item.avatar_url }}",
+        {% endfor %}
+    {% endfor %}
+};
+
+
+//餐厅的电话号码
+{% if house %}
+var phone = {{ house.phone }}
+{% else %}
+var phone = {{ house.phone }}
+{% endif %}
+
+</script>
+<script type="text/javascript" src="{% static 'DiningServer/js/indexMain.js' %}"></script>
+<script>
+    $('#btn-phone').on('click',function(){
+        $('#phone').addClass('on');
+        $('.pos-bg').addClass('on');
+        $('.pos-bg').css('z-index','3000');
+        document.body.style.overflow = "hidden";
+    });
+
+    $('#btn-close').on('click',function(){
+        $('#phone').removeClass("on");
+        $('.pos-bg').removeClass('on');
+        $('.pos-bg').css('z-index','1100');
+        document.body.style.overflow = "auto";
+    });
+</script>
+
+<script>
+
+    // $('.add').each(function(index){
+    //     $(this).on('click',function(){
+    //         $('.minus').eq(index).animate({right:'.7rem'});
+    //         $('.result').eq(index).animate({right:'.35rem'});
+    //         $('.minus').eq(index).addClass('on');
+    //         $('.result').eq(index).addClass('on');
+
+    //     });
+    // });
+
+    // $('.minus').each(function(index){
+    //     $(this).on('click',function(){
+    //         var r = $('.result').eq(index).val()-1;
+    //         if ( r == 0) {
+    //             $('.minus').eq(index).removeClass('on');
+    //             $('.result').eq(index).removeClass('on');
+    //             $('.minus').eq(index).animate({right:'0'});
+    //             $('.result').eq(index).animate({right:'0'});
+    //         }
+    //     });
+    // });
+
+    // 购物车
+
+    $('#cart-btn').on('click',function(){
+        var oshare = $('.share').text();
+        if (oshare>=1) {
+            $('#ft-shop').addClass('on');
+            $('#ft-shop').animate({bottom: '1.15rem'});
+            $('.pos-bg').addClass('on');
+            document.body.style.overflow = "hidden";
+        }
+    });
+
+    $('#shop-clear').on('click',function(){
+        $('#ft-shop').removeClass('on');
+        $('#ft-shop').animate({bottom: '0'});  
+        $('.pos-bg').removeClass('on');
+        $('#shop-ul li').remove();
+        $('.total').text('0.00');
+        $('.share').text(0);
+        $('.result').val(0);
+        $('.shop-ul').css('overflow-y','hidden');
+        $('.shop-ul').css('height','100%');
+        document.body.style.overflow = "auto";
+    });
+
+    $('.pos-bg').on('click',function(){
+        $('#ft-shop').removeClass('on');
+        $('#ft-shop').animate({bottom: '0'}); 
+        $('#phone').removeClass("on");
+        $('.pos-bg').removeClass('on');
+        $('.pos-bg').css('z-index','1100'); 
+        document.body.style.overflow = "auto";
+    });
+</script>
+
+
+
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery.unveil.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/navbar2.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+
+input,button,select,textarea{outline:none}
+textarea{resize:none}
+
+
+
+/*背景*/ 
+.single-box{
+	width: 100vw;
+	height: 100vh;
+	background: url('../images/bg.jpg');
+	background-size: 100%;
+	font-family: '微软雅黑';
+}
+
+.box-dl{
+	position: absolute;
+	top: 12.4vw;
+	right: 30vh;
+	border: 2px solid #fff;
+	width: 23.75%;
+	height: 42%;	
+}
+
+.box-dlbk{
+	margin-top: 9%;
+	font-size: 37px;
+	color: #fff;
+	text-align: center;
+	height: 37px;
+}
+
+.box-in{
+	width: 75%;
+	height: 12.7%;
+	margin: 5% auto 0;
+}
+
+.box-in p,.box-in input{
+	float: left;
+}
+
+
+.box-in p{
+	width: 18.4%;
+	height: 100%;
+	background:red;
+	border-right: 1px solid #c4b6aa;
+	background:#a38d7a;
+	border-top-left-radius: 9px;
+	border-bottom-left-radius: 9px;
+	-webkit-border-top-left: 9px;
+	-webkit-border-bottom-left-radius: 9px;
+	-moz-border-top-left: 9px;
+	-moz-border-bottom-left-radius: 9px;
+	-0-border-top-left: 9px;
+	-0-border-bottom-left-radius: 9px;
+	-ms-border-top-left: 9px;
+	-ms-border-bottom-left-radius: 9px;
+}
+
+.box-inbg{
+	width: 23px;
+	height: 100%;
+	background: url('../images/dl.png') 0 0 no-repeat;
+	margin: 7% auto 0;
+	display: block;
+}
+
+.box-inbg2{
+	width: 23px;
+	height: 100%;
+	background: url('../images/dl.png') -27px 0 no-repeat;
+	margin: 7% auto 0;
+	display: block;
+}
+
+
+.box-in input{
+	border: none;
+	width: 81.1%;
+	height: 100%;
+	background:#a38d7a;
+	border-top-right-radius: 9px;
+	border-bottom-right-radius: 9px;
+	-webkit-border-top-right: 9px;
+	-webkit-border-bottom-right-radius: 9px;
+	-moz-border-top-right: 9px;
+	-moz-border-bottom-right-radius: 9px;
+	-0-border-top-right: 9px;
+	-0-border-bottom-right-radius: 9px;
+	-ms-border-top-right: 9px;
+	-ms-border-bottom-right-radius: 9px;
+	font-size: 13.76px;
+	color: #fff;
+}
+
+::-webkit-input-placeholder{
+	color:  #fff;
+}
+:-moz-input-placeholder{
+	color:  #fff;
+}
+:-ms-input-placeholder{
+	color:  #fff;
+}
+:-o-input-placeholder{
+	color:  #fff;
+}
+
+.box-inft{
+	width: 75%;
+	height: 12.7%;
+	background: #faba2e;
+	color: #fff;
+	border-radius: 9px;
+	-webkit-border-radius: 9px;
+	-moz-border-radius: 9px;
+	-o-border-radius: 9px;
+	-ms-border-radius: 9px;
+	font-size: 22.36px;
+	text-align: center;
+	margin: 6% auto 0;
+	cursor:pointer;
+	line-height: 30px;
+}

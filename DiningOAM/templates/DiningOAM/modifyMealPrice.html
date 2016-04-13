@@ -1,0 +1,143 @@
+{% load staticfiles %}
+{#<div class="right noneBox" id="mshli-11">#}
+<div class="right01"><img src="{% static 'DiningOAM/images/04.gif' %}" /> 管理员 &gt; <span>调价单</span></div>
+<div class="price-box">
+    <div style="float: left;width: 300px;">餐品列表
+        <select name="" id="allmeal-mod">
+            {% for item in meal_name%}
+                <option value="{{ item }}">{{ item.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+{#    <div style="padding-left:-100px;">当前价格:<input type="text" value="0.0" disabled="true" id="cur-price"/></div>#}
+    <div style="float: left;left: 180px;">当前价格:<input type="text" value="0.0" readonly="true" disabled="true" id="cur-price"/></div>
+    <div style="left: 390px;">价格列表
+        <select name="" id="allprice-mod">
+            {% for item in meal_price%}
+{#                <option value="{{ item.name }}">{{ item.price }}</option>#}
+                <option value="{{ item.price }}">{{ item.price }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    {% if house_name %}<!--如果是超级管理员显示分店列表-->
+    <div style="float: left;left: 525px;position: absolute;">更新价格:<input type="text" value="" placeholder="请输入新的菜价" id="new_price"/></div>
+    <div class="shop-box clearfix">
+        <h5>分店  <i> (请勾选需要修改价格的分店)</i></h5>
+        {% for housename in house_name %}
+            <p><input type="checkbox" name="subBox" value="{{ housename }}"/>{{ housename }}</p>
+        {% endfor %}
+            <p id="shop-check"><input type="checkbox" id="checkAll"/>全选</p>
+    </div>
+    {% endif %}
+    <input type="button" value="提交" class="shop-btn" id="price_mod-btn"/>
+
+</div>        {% comment %}{% endcomment %}
+<div id="modifyPrice-result"></div>
+{#</div>#}
+<script>
+    $('#allmeal-mod').change(function(){
+        data = $('#allmeal-mod').val();
+        console.log('data:', data, 'type: ', typeof (data));
+        //alert('select-i: '+data);
+        dataJson = eval("(" +data+")");//将string型的data转换为json型
+        //alert('test1:'+dataJson.price);
+        document.getElementById('cur-price').value = dataJson.price;
+    });
+
+    $('#price_mod-btn').click(function(){
+        //在点击提交时，判断当前选择的菜品是否为空，如果为空，则下面不能选定当前的所有的分店
+        //避免，当前店面店面不存在某菜品，却被修改价格
+        //待写
+        var input_price = $('#new_price').val();
+        var select_price = $('#allprice-mod').val();
+        var str;
+        var select_meal = $('#allmeal-mod').val();
+        var mealJson = eval("(" +select_meal+")");
+        /**/
+        if(input_price)
+        {
+            alert('select_price:'+select_price+'; type'+typeof (select_price))
+            if(!(mealJson.hasOwnProperty("price")) && select_price == '')
+            {
+                ;//直接有管理员创建新的价格，并不应用于任何菜品
+            }
+            else
+            {
+                if(!(mealJson.hasOwnProperty("price")))
+                {
+                    alert('请选择更新的菜品');
+                    return false
+                }
+                else
+                {
+                    str = chkChoose();
+                    if(str == '')
+                    {
+                        return false
+                    }
+                }
+
+            }
+        }
+        else
+        {
+            if(select_price == '')
+            {
+                alert('请选择更新的菜价');
+                return false
+            }
+            else if(!(mealJson.hasOwnProperty("price")))
+            {
+                alert('请选择更新的菜品');
+                return false
+            }else
+            {
+                str = chkChoose();
+                if(str == '')
+                {
+                    return false
+                }
+
+            }
+        }
+        _data = {
+            meal_name: mealJson.name,
+            update_price:select_price,
+            new_price:input_price,
+            app_house:str
+        };
+        console.log('_data',_data);
+        $.post('/DiningOAM/modifyPrice/', _data, function(data) {
+            $('#modifyPrice-result').html(data);
+            console.log('data:', data);
+            //alert('data: '+data['result']);
+            if(data[0].hasOwnProperty('result')) {//判断第一个是否是当前记录个数
+                data['result'] == 'success' ? alert('修改成功'):alert('修改失败'+data['atach_info']);
+            }
+            else {
+                for(var i= 0;i<data[0];i++) {
+                    data[i+1]['result'] == 'success' ? alert('修改成功'):alert('修改失败'+data[i+1]['house_name']+data[i+1]['atach_info']);
+                }
+            }
+            }, 'json');
+
+    });
+
+    function chkChoose()
+    {
+        var str = "";
+        var result = "";
+        var elements = document.getElementsByName('subBox');
+        for(var i= 0;i < elements.length;i++)
+        {
+            if(elements[i].checked)
+            {
+                str += elements[i].value + ',';
+            }
+        }
+        alert(str == ""?'请选择应用的店面':str)
+        return str
+    }
+
+</script>

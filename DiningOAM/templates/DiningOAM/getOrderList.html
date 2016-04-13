@@ -1,0 +1,126 @@
+<div class="text-c"> 日期范围：
+    <input type="text" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;" name="order-logmin">
+    -
+    <input type="text" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" id="logmax" class="input-text Wdate" style="width:120px;" name="order-logmax">
+    <select name='order-house' id = "house_id" style="width:80px;height:30px;font-size:14px;padding-top:0px;">
+        {% for item in house_info%}
+        <option value="{{ item.house_id }}">{{ item.house_name }}</option>
+        {% endfor %}
+    </select>
+    <button name="" id="orderlist-btn" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+</div>
+<div id="order-caculate">
+{#<div class="box-height cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onClick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a></span> <span class="r">共有数据：<strong name="order-num" id="order-num-id">{{ order_count }}</strong> 条</span> </div>#}
+<div class="box-height cl pd-5 bg-1 bk-gray mt-20"> <span class="l"></span> <span class="r">共有数据：<strong name="order-num" id="order-num-id">{{ order_count }}</strong> 条</span> </div>
+<div class="mt-20" id="order-temp-test">
+<table class="table table-border table-bordered table-bg table-hover table-sort">
+    <thead>
+        <tr class="text-c">
+{#            <th width="40"><input name="" type="checkbox" value=""></th>#}
+            <th width="40">订单ID</th>
+            <th width="40">支付ID</th>
+            <th width="40">分店ID</th>
+            <th width="40">用户ID</th>
+            <th width="60">订单总额</th>
+            <th width="100">添加时间</th>
+            <th width="100">支付时间</th>
+            <th width="40">订单状态</th>
+            <th width="60">订单内容</th>
+            <th width="100">确认送达时间</th>
+            <th width="80">操作</th>
+
+        </tr>
+    </thead>
+    <tbody id="orderlist">
+    {% for orderList in  order_list%}
+        <tr class="text-c">
+{#            <td><input name="" type="checkbox" value=""></td>#}
+            <td>{{ orderList.id }}</td>
+            <td>{{ orderList.prepay_id }}</td>
+            <td>{{ orderList.house_id }}</td>
+{#            <td>{{ orderList.user_id }}</td>#}
+            <td>{{ orderList.openid }}</td>
+            <td>{{ orderList.bill_totalling }}</td>
+            <td>{{ orderList.add_time }}</td>
+            <td>{{ orderList.pay_time }}</td>
+            <td>{{ orderList.bill_state }}</td>
+            <td>{{ orderList.bill_content }}</td>
+            <td>{{ orderList.ensure_send_time }}</td>
+            <td class="td-manage"><a style="text-decoration:none" class="ml-5" onClick="order_del('{{orderList.id}}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+
+<script>
+    /**/
+    function order_del(id)
+    {
+{#        is_super = getCookie('type');#}
+{#        alert('is_super: '+is_super);#}
+        if (confirm("您确定要删除该订单记录吗？"))
+        {
+            house_id = $('select[name="order-house"]').val();//这里能否成功获取当前查询的店面id？
+{#            alert('house_id:', house_id)#}
+            _data = {
+                id:id,
+                house_id:house_id
+            }
+            $.post('/DiningOAM/delOrder/', _data, function (data) {
+                //$('#order-caculate').html(data);
+                $('#getallorder').html(data);
+                data['result'] == 'success' ? alert('删除成功'):alert('删除失败：'+data['atach_info']);
+                if(data['result'] == 'success')
+                {
+                    var index = $(this).index();
+                    getOrderList(index);
+                }
+            }, 'json');
+
+            //$.post('/DiningOAM/delOrder/', _data, function (data) {
+{#          //      $('#orderlist').html(data);#}
+            //    $('#order-caculate').html(data);
+            //}, 'html');//直接返回渲染后的页面
+            //console.log('orderlist:', orderlist)
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    $('#orderlist-btn').click(function(){
+        //var min_time = $('input[name="order-logmin"]').val();
+        //var max_time = $('input[name="order-logmax"]').val();
+        //var id = $('select[name="order-house"]').val();
+        //alert('enter orderlist-btn');
+        var min_time = $('#logmin').val();
+        var max_time = $('#logmax').val();
+        var id = $('#house_id').val();
+        //alert('min:'+min_time+';max:'+max_time+';id:'+id)
+        console.log('order-house:', id);
+        if (min_time == 0 || max_time == 0)//如果没有输入时间，则不返回min或max
+        {
+            _data = {
+            house_id:id
+            };
+        }
+        else
+        {
+            _data = {
+            min:min_time,
+            max:max_time,
+            house_id:id
+            };
+        }
+
+        $.post('/DiningOAM/getOrderList/',_data, function (data) {
+    {#            $('#orderlist').html(data);#}
+    {#            $('#order-caculate').html(data);#}
+            $('#getallorder').html(data);
+        }, 'html');
+    });
+</script>
+

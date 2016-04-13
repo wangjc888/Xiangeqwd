@@ -1,0 +1,303 @@
+
+
+
+.box-all{
+	width: 4rem;
+	height: 100vh;
+	background: #f8f8f6;
+}
+
+
+.all-box li{
+	width: 4rem;
+	padding-top: .09375rem;
+}
+
+div.all-store{
+	width: 4rem;
+	height: .5rem;
+	background: #fff;
+	border-top: 1px solid #ccc;
+	position: relative;
+}
+
+div.all-store p,div.all-store img{
+	position: absolute;
+}
+
+ul.all-box{
+	background: #f8f8f6;
+}
+
+
+div.all-store p:nth-child(1){
+	font-size: .15rem;
+	color: #666;
+	top: .15rem;
+	left: .2125rem;
+}
+
+div.all-store img:nth-child(2){
+	width: .0875rem;
+	height: .1375rem;
+	top: .19rem;
+	left: 1.1rem;
+}
+
+div.all-store p:nth-child(3){
+	width: .728125rem;
+	height: .2625rem;
+	text-align: center;
+	line-height: .2625rem;
+	font-size: .15rem;
+	color: #fff;
+	background: #ff644e;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	top: .125rem;
+	right: 1.5rem;
+}
+
+div.all-store img:nth-child(4){
+	width: .2rem;
+	height: .2rem;
+	position: absolute;
+	top: .15rem;
+	right: .2125rem;
+}
+
+
+.all-box li div.all-ct{
+	width: 4rem;
+	height: .81875rem;
+	border-top: 1px solid #f1f1f1;
+	border-bottom:1px solid #f1f1f1;
+	background: #fff;
+}
+
+.all-box li div.all-ct p.all-cont{
+	width: 3.578125rem;
+	height: .396875rem;
+	margin: .16rem auto 0;
+	position: relative;
+}
+
+
+
+
+p.all-cont span{
+	position: absolute;
+}
+
+p.all-cont span:nth-child(1){
+	top: 0;
+	left: 0;
+	font-size: .17rem;
+	color: #333;
+}
+
+p.all-cont span:nth-child(2){
+	top: .28125rem;
+	left: 0;
+	font-size: .15rem;
+	color: #666;
+}
+
+p.all-cont span:nth-child(3){
+	top: 0;
+	right: 0;
+	font-size: .17rem;
+	color: #ff644e;
+}
+
+p.all-cont span:nth-child(4){
+	top: .28125rem;
+	right: 0;
+	font-size: .15rem;
+	color: #666;
+}
+
+
+div.all-cb{
+	width: 4rem;
+	height: .46875rem;
+	font-size: .17rem;
+	color: #333;
+	border-bottom: 1px solid #ccc;
+	background: #fff;
+	position: relative;
+}
+
+div.all-cb span{
+	width: .9rem;
+	height: .3rem;
+	border-radius: 50px;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	text-align: center;
+	line-height: .3rem;
+	font-size: .15rem;
+	position: absolute;
+	color: #fff;
+	top: .084735rem;
+}
+
+div.all-cb span a{
+	color: #fff;
+}
+
+div.all-cb span.all-pay{
+	background: #ff644e;
+	right: 1.21875rem;
+}
+
+div.all-cb span.all-pay2{
+	background: #ccc;
+	right: 1.21875rem;
+}
+
+div.all-cb span.all-com{
+	background: #ccc;
+	right: .2125rem;
+}
+
+div.all-cb span.all-com2{
+	background: #faba2e;
+	right: .2125rem;
+}
+
+
+
+/*跳转按钮*/
+
+.pos-fixed{
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 4rem;
+	height: .5125rem;
+	border-top: 1px solid #ccc;
+	z-index: 2000;
+	background: #fff;
+}
+
+.pos-ordering,.pos-order,.pos-page{
+	width: 1.3rem;
+	position: absolute;
+	height: .5125rem;
+	top: 0;
+}
+
+.pos-ordering{
+	left: 0;
+}
+
+.pos-order{
+	left: 1.3rem;
+}
+
+.pos-page{
+	left: 2.6rem;
+}
+
+.pos-size,.pos-size2{
+	font-size: 0.15rem;
+	text-align: center;
+	line-height: .82rem;
+}
+
+.pos-size{
+	color: #666;
+}
+
+.pos-size2{
+	color: #ff644e;
+}
+
+.post-bg{
+	width: .27rem;
+	height: .23rem;
+	position: absolute;
+	top: .0625rem;
+	left: .52rem;
+	display: block;
+}
+
+.post-bg2{
+	width: .2rem;
+	height: .23rem;
+	position: absolute;
+	top: .0625rem; 
+	left: .55rem;
+}
+
+.post-bg3{
+	width: .2rem;
+	height: .23rem;
+	position: absolute;
+	top: .0625rem;
+	left: .52rem;
+}
+
+/*404页面样式*/
+
+div.di-box{
+	width: 4rem;
+	height: 100vh;
+	background: #f8f8f6;
+}
+
+
+div.di-bg{
+	margin: 0 auto;
+	width: 2.74375rem;
+	height: 1.465625rem;
+	padding-top: 1rem;
+}
+
+div.di-bg img{
+	width: 2.74375rem;
+	height: 2.465625rem;
+	background-size: 100%;
+}
+
+
+/*商家休息中*/
+
+
+
+
+div.box-rest{
+	width: 4rem;
+	height: 100vh;
+	background: #f8f8f6;
+}
+
+div.rest-box{
+	width: 1.11875rem;
+	padding-top: 1.85625rem;
+	margin:0 auto;
+}
+
+
+div.rest-bg{
+	width: 1.11875rem;
+	height: 1.0875rem;
+	background: url('../images/index/xiu.png');
+	background-size: 100%;
+}
+
+div.rest-box p:nth-child(2){
+	font-size: .20625rem;
+	text-align: center;
+	margin-top:.15rem;
+	color: #666;
+}
+
+div.rest-box p:nth-child(3){
+	font-size: .1rem;
+	color: #666;
+	text-align: center;
+	line-height: .21875rem;
+}

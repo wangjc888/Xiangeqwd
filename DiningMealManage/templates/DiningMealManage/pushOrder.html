@@ -1,0 +1,251 @@
+<script type="text/javascript">
+    /*
+    function _abc(){
+        var oBox = document.getElementById('box');
+        var EMBED = document.createElement('EMBED');
+        EMBED.setAttribute('src','http://58.30.31.197:9999/gddx.sc.chinaz.com/Files/DownLoad/sound1/201508/6224.wav');
+        EMBED.setAttribute('loop','true');
+        EMBED.setAttribute('width','0');
+        EMBED.setAttribute('height','0');
+        oBox.appendChild(EMBED);
+    };*/
+    function scheduled_job(){
+        //alert('enter pushOrder schedeled_job');
+        $.post('/DiningMealManage/schdule_task/', {}, function (data) {
+            $('#push-order').html(data);
+            //console.log('scheduled_job/pushPage', data);
+            //alert('enter pushOrderPage.html');
+            if(lastData < data.length)
+            {
+                _abc();
+            }
+            lastData = data.length;
+            //alert('lastData:'+lastData);
+            //_abc();
+        }, 'html');
+        // }, 'json');
+    }
+
+    //商家处理订单
+    //$(document).ready(function(){
+    function dealOrder(house_id, bill_id, totalling, add_time, flag, openid){
+        //alert('enter dealOrder');
+        //alert('house_id'+house_id+'; bill_id'+bill_id+';total'+totalling+';add_time'+add_time+';flag'+flag);
+        _data = {
+            'house_id':house_id,
+            'bill_id':bill_id,
+            'flag':flag,
+            'openid':openid
+        };
+
+        $.post('/DiningMealManage/deal_order/', _data, function (data) {
+            $('#push-order').html(data);
+            insertOrder(house_id,flag);
+            //console.log('scheduled_job/pushPage', data);
+            //将处理完的订单信息插入到下方对应栏
+        }, 'html');
+
+    }
+    //});
+
+    function insertOrder(house_id,flag){
+        //alert('enter insertOrder');
+        _data = {
+            'house_id':house_id,
+            'flag':flag//显示当前的是确定还是取消
+        };
+        if( flag == 1)
+        {
+            $.post('/DiningMealManage/insert_order/', _data, function (data) {
+                $('#ensure_order').html(data);
+                //console.log('insertOrder', data);
+            }, 'html');
+        }
+        else//取消订单
+        {
+            $.post('/DiningMealManage/insert_order/', _data, function (data) {
+                $('#cancel_order').html(data);
+                //console.log('insertOrder', data);
+            }, 'html');
+        }
+
+
+    }
+
+
+</script>
+{% comment %}
+<div id="menu_order">
+    <div id="push-order">
+        {% for item in bill_list %}
+        <div class="cont-box">
+            <p class="cont-top">订单编号：{{ item.id }}</p>
+            <div class="clearfix cont-ct">
+
+            <!--左边内容-->
+                <div class="cont-left">
+                <!--左边标题-->
+                    <div class="cont-tit clearfix">
+                        <div>菜品</div>
+                        <div class="clearfix left-a">
+                            <p>数量</p>
+                            <p>小计（元）</p>
+                        </div>
+                    </div>
+
+                    <!--内容详情-->
+
+                <ul class="cont-ctt">
+                    {% for meal_info in item.meal_detail %}
+                    <li class="ctt-box clearfix">
+                        <div>{{ meal_info.meal_name }}</div>
+                        <div class="clearfix ctt-right">
+                            <p>{{ meal_info.buy_count }}</p>
+                            <p>{{ meal_info.meal_price }}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+
+                <!--价格-->
+                    <div class="cont-tl clearfix">
+                        <p>配送费</p>
+                        <p>5.00</p>
+                    </div>
+
+                    <div class="cont-total clearfix">
+                        <p>实际支付：<i>{{ item.bill_totalling }}</i>元</p>
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+            <!--右边内容-->
+                <div class="cont-right">
+                    <p>配送信息</p>
+
+                    <ul class="right-tact">
+                        {% for userinfo in item.user_detail %}
+                        <li>联系人：{{ userinfo.username }} 先生</li>
+                        <li>联系电话：{{ userinfo.phone }}</li>
+                        <li>收货地址：{{ item.user_location }} </li>
+                        <li>下单时间：{{ item.add_time }}</li>
+                        <li>收货时间：尽快送出</li>
+                        {% endfor %}
+                    </ul>
+
+                    <div class="cont-btn clearfix">
+                        <p id="btn-on">取消订单</p>
+                        <p id="btn-yes">确认订单</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!--订单详情-->
+
+    <div class="cont-reved clearfix" id="insert-order">
+        <!--已接订单-->
+        <div class="reved-left" id="ensure_order">
+        <p>已接订单</p>
+        <ul class="left-tt">
+            {% for item in order_list%}
+            <li class="clearfix">
+                <div>{{ item.bill_id }}</div>
+                <div>{{ item.total }}</div>
+                <div>{{ item.add_time }}</div>
+            </li>
+            {% endfor %}
+        </ul>
+        </div>
+        <div id="push_result"></div>
+
+        <!--取消订单-->
+        <div class="reved-right" id="cancel_order">
+            <p>取消订单</p>
+            <ul class="right-tt">
+                <li>100308711651730661</li>
+            </ul>
+        </div>
+
+    </div>
+    <div>
+</div>
+
+{% endcomment %}
+{% for item in bill_list %}
+<div class="cont-box">
+    <p class="cont-top">订单编号：{{ item.id }}</p>
+    <div class="clearfix cont-ct">
+
+    <!--左边内容-->
+        <div class="cont-left">
+        <!--左边标题-->
+            <div class="cont-tit clearfix">
+                <div>菜品</div>
+                <div class="clearfix left-a">
+                    <p>数量</p>
+                    <p>小计（元）</p>
+                </div>
+            </div>
+
+            <!--内容详情-->
+
+        <ul class="cont-ctt">
+            {% for meal_info in item.meal_detail %}
+            <li class="ctt-box clearfix">
+                <div>{{ meal_info.meal_name }}</div>
+                <div class="clearfix ctt-right">
+                    <p>{{ meal_info.buy_count }}</p>
+                    <p>{{ meal_info.meal_price }}</p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+
+        <!--价格-->
+            <div class="cont-tl clearfix">
+                <p>配送费</p>
+                <p>{{ item.delivery_fee}}</p>
+            </div>
+
+            <div class="cont-total clearfix">
+{#                <p>实际支付：<i>{{ item.bill_totalling }}</i>元</p>#}
+                <p>实际支付：<i>{{ item.all_fee }}</i>元</p>
+            </div>
+
+
+        </div>
+    <!--右边内容-->
+        <div class="cont-right">
+            <p>配送信息</p>
+
+            <ul class="right-tact">
+                {% for userinfo in item.user_detail %}
+                <li>联系人：{{ userinfo.username }} 先生</li>
+                <li>联系电话：{{ userinfo.phone }}</li>
+                {% endfor %}
+                <li>收货地址：{{ item.user_location }} </li>
+                <li>下单时间：{{ item.add_time }}</li>
+                <li>收货时间：尽快送出</li>
+
+            </ul>
+
+            <div class="cont-btn clearfix">
+                <p  class="btn-on" onClick="javascript:dealOrder('{{ item.house_id }}', '{{ item.id }}','{{ item.all_fee }}', '{{ item.add_time }}' , '0', '{{ item.openid }}')">取消订单</p><!--将订单id传过去-->
+                <p  class="btn-yes" onClick="javascript:dealOrder('{{ item.house_id }}', '{{ item.id }}','{{ item.all_fee }}', '{{ item.add_time }}', '1', '{{ item.openid }}')">确认订单</p>
+{#                <p  class="btn-on" onClick="javascript:dealOrder('{{ item.house_id }}', '{{ item.id }}','{{ item.bill_totalling }}', '{{ item.add_time }}' , '0', '{{ item.openid }}')">取消订单</p><!--将订单id传过去-->#}
+{#                <p  class="btn-yes" onClick="javascript:dealOrder('{{ item.house_id }}', '{{ item.id }}','{{ item.bill_totalling }}', '{{ item.add_time }}', '1', '{{ item.openid }}')">确认订单</p>#}
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}

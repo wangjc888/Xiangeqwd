@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    {% load staticfiles %}
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="{% static 'DiningMealManage/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'DiningMealManage/css/single.css' %}">
+
+{#    <script language="javascript" src="{% static 'DiningMealManage/js/LodopFuncs.js' %}"></script>#}
+{#    <object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>#}
+{#	    <embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0 pluginspage="install_lodop32.exe"></embed><!--这里原为install_lodop32.exe-->#}
+{#    </object>#}
+</head>
+{#<body onclick="doPrint()">#}
+<body>
+<div class="right-c" id="print_order">
+{#        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">订单号码 3460 5007 7633 8260</p>#}
+{#        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">订单时间 2016-01-26 10:22:26</p>#}
+{#        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">营养双拼套餐 x1 ￥16</p>#}
+{#	    <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">配送费 ￥16</p>#}
+{#        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">总计 ￥16</p>#}
+{#        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">期望时间 立即配送</p>#}
+{#        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">配送信息</p>#}
+{#        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">  姜岩（女士）15501076247</p>#}
+{#        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">  三里屯SOHO-公寓12座（2503）</p>#}
+
+        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">订单号码: {{ order_id }}</p>
+        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">订单时间: {{ add_time }}</p>
+        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">订单内容:</p>
+        {% for item in order_content %}
+            <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">{{ item.name }} x{{ item.count }} ￥{{ item.price }}</p>
+        {% endfor %}
+	    <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">配送费: ￥{{ delivery_fee }}</p>
+        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">总计: ￥{{ total }}</p>
+        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">期望时间: 立即配送</p>
+        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">配送信息:</p>
+        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">用户名:{{ user_name }}联系方式:{{ user_phone }}</p>
+        <p style="font-size: 8px;font-weight: normal;margin: 0px;padding: 0px;">配送地址:{{ address }}</p>
+</div>
+
+{#<object id="DLPrinter" classid="clsid:5C230622-45E5-4e3c-893C-3BFDDC4DB5E4"  codebase="C:/Users/acer/Desktop/html_test_files/DLPrinter.cab" height="0" width="0" ></object>#}
+{#<script>#}
+{#    document.getElementById("DLPrinter").PrintPreview();#}
+{#    //DLPrinter.PrintPreview();#}
+{#</script>#}
+{#<script src="{% static 'DiningMealManage/js/jquery-1.7.1.min.js' %}"></script>#}
+{#add by ljz for direct print#}
+{#<object classid= "CLSID:8856F961-340A-11D0-A96B-00C04FD705A2 " height=0 id=wb name=wb width=0> </object>#}
+
+
+{#<script src="{% static 'DiningMealManage/js/print.js' %}"></script>#}
+{% comment %}
+<script>
+    function doPrint() {
+            //打开一个新的窗体
+        alert('Print.html/enter doPrint');
+        var bdhtml=window.document.body.innerHTML;
+        var newWin = window.open('about:blank',"","");
+            //取得id为"order"的<div id="order"></div>之间的内容
+           //将取得的打印内容放入新窗体
+        newWin.document.write(bdhtml);
+           //刷新新窗体
+        newWin.document.location.reload();
+      //调用打印功能
+        newWin.print();
+           //打印完毕自动关闭新窗体
+        newWin.close();
+        //window.location='/DiningMealManage/pushPage/';
+    }
+/*Created by acer on 2016/1/29.*/
+</script>
+{% endcomment %}
+</body>
+</html>
+

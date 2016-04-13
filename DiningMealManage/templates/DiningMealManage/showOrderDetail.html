@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+{% load staticfiles %}
+<meta charset="utf-8">
+<title>订单详情</title>
+<script type="text/javascript" src="{% static 'DiningMealManage/js/jquery-1.7.1.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'DiningMealManage/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningMealManage/css/single.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningMealManage/css/content.css' %}">
+
+
+</head>
+<body>
+{#<div class="cont-box" style="margin: 70px auto;">#}
+<div class="cont-box">
+    <p class="cont-top">订单编号：{{ orderDict.id }}</p>
+    <div class="clearfix cont-ct">
+
+    <!--左边内容-->
+        <div class="cont-left">
+        <!--左边标题-->
+            <div class="cont-tit clearfix">
+                <div>菜品</div>
+                <div class="clearfix left-a">
+                    <p>数量</p>
+                    <p>小计（元）</p>
+                </div>
+            </div>
+
+            <!--内容详情-->
+
+        <ul class="cont-ctt">
+            {% for meal_info in orderDict.meal_detail %}
+            <li class="ctt-box clearfix">
+                <div>{{ meal_info.meal_name }}</div>
+                <div class="clearfix ctt-right">
+                    <p>{{ meal_info.buy_count }}</p>
+                    <p>{{ meal_info.meal_price }}</p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+
+        <!--价格-->
+            <div class="cont-tl clearfix">
+                <p>配送费</p>
+                <p>{{ orderDict.delivery_fee}}</p>
+            </div>
+
+            <div class="cont-total clearfix">
+{#                <p>实际支付：<i>{{ item.bill_totalling }}</i>元</p>#}
+                <p>实际支付：<i>{{ orderDict.all_fee }}</i>元</p>
+            </div>
+
+
+        </div>
+    <!--右边内容-->
+        <div class="cont-right">
+            <p>配送信息</p>
+
+            <ul class="right-tact">
+                <li>联系人：{{orderDict.username }} 先生</li>
+                <li>联系电话：{{orderDict.phone }}</li>
+                <li>收货地址：{{orderDict.user_location }} </li>
+                <li>下单时间：{{orderDict.add_time }}</li>
+                <li>收货时间：尽快送出</li>
+
+            </ul>
+            {% if orderDict.bill_state < 3 %}
+            <div class="cont-btn clearfix">
+                <p class="btn-on" onClick="sureArrive('{{ orderDict.house_id }}', '{{ orderDict.id }}','{{ orderDict.openid }}')">确认送达</p><!--将订单id传过去-->
+{#                <p  class="btn-on" onClick="javascript:dealOrder('{{ item.house_id }}', '{{ item.id }}','{{ item.bill_totalling }}', '{{ item.add_time }}' , '0', '{{ item.openid }}')">取消订单</p><!--将订单id传过去-->#}
+{#                <p  class="btn-yes" onClick="javascript:dealOrder('{{ item.house_id }}', '{{ item.id }}','{{ item.bill_totalling }}', '{{ item.add_time }}', '1', '{{ item.openid }}')">确认订单</p>#}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script>
+    function sureArrive(house_id, bill_id, openid){
+        var _data;
+        _data = {
+            'house_id':house_id,
+            'order_id':bill_id,
+            'openid':openid
+        };
+        $.post('/DiningMealManage/sure_arrive/', _data, function (data) {
+            data['result'] == 'success' ? alert('成功确认'):alert(data['atach_info']);
+            window.close();//确认送达之后自动关闭订单详情页面
+        }, 'json');
+    }
+</script>
+</body>
+</html>
+{% comment %}{% endcomment %}

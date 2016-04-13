@@ -1,0 +1,25 @@
+<!--这里与js结合，待修改和测试-->
+<!--需要将收到的数据传入到jquery中显示-->
+
+{% comment %}
+{% if totalNumDict|length %}
+print('totalNumDict:',totalNumDict)
+<!--for cnt in range(len(totalNumDict))-->
+{% for cnt in length|list %}<!--这里需要给出传入字典的长度，处理似乎有问题？{0:{'Date':'2015-12-21','Cnt':23},1:{'Date'...}}-->
+    {% for date,num in totalNumDict.cnt.items %}
+        {{ date }}:{{ num }}<!--日期，和记录-->
+    {% endfor %}
+{% endfor %}
+{% endif %}
+
+<!--获取的每日用户量-->
+{% if countDict %}
+print('countDict:',countDict)
+{% for cnt1 in range(len(countDict))%}
+    {% for date1,num1 in countDict.cnt1.items %}
+        {{ date1}}:{{ num1 }}<!---->
+    {% endfor %}
+{% endfor %}
+{% endif %}
+{% endcomment %}
+

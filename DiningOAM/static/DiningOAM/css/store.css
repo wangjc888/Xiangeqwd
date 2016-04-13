@@ -1,0 +1,287 @@
+.clearfix:after{ display: block; content: ""; clear: both;}
+.clearfix{ zoom:1;}
+
+
+/*申请开店信息*/
+
+
+.store-box{
+    position: relative;
+    width: 100%;
+}
+
+.box-store{
+    position: absolute;
+    top: 100px;
+    right: 20%;
+    height: 50vh;
+}
+
+.box-store p{
+    font-size: 16px;
+    height: 20px;
+    margin-top: 20px;
+}
+
+.box-store p input{
+    height: 18px;
+    border: 1px solid #ccc;
+    margin-top: -4px;
+}
+
+.store-but{
+    width: 30%;
+    height: 5vh;
+    background: #39B867;
+    color: #fff;
+    margin: 8% auto 0;
+}
+
+/*新家菜品*/
+.box-kell{
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 50vh;
+    width: 60%;
+    margin: 10% auto 0;
+}
+
+.kell-img{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.box-kell p{
+    font-size: 16px;
+    height: 20px;
+    margin-top: 35px;
+}
+
+.box-kell p input{
+    height: 18px;
+    border: 1px solid #ccc;
+    margin-top: -4px;
+}
+
+.kell-but{
+    width: 30%;
+    height: 5vh;
+    background: #39B867;
+    color: #fff;
+    margin: 8% auto 0;
+}
+
+.branch-box{
+    position: absolute;
+    top: -10%;
+    right: 260px;
+}
+
+.fication-box{
+    position: absolute;
+    top: 12%;
+    right: 265px;
+}
+
+/*地图*/
+
+.store-box #myPageTop{
+    width: 50%;
+    border: none;
+}
+
+.store-box #container{
+    width: 480px;
+    height: 440px;
+    margin-top: 3%;
+    margin-left: 2%;
+}
+
+/*登录框*/
+div.bak-box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 400px;
+    margin-left: -200px;
+    margin-top: -200px;
+    border: 2px solid #ccc;
+    z-index: 2;
+    background: #fff;
+}
+
+
+.bak-auto{
+    width: 200px;
+    height: 200px;
+    margin: 100px auto;
+}
+
+
+.bak-auto p{
+    margin-top: 15px;
+}
+
+.bak-btn{
+    width: 60px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/*调价单*/
+
+.price-box{
+    width: 80%;
+    height: 50vh;
+    margin: 13% auto 0;
+    position: relative;
+}
+
+.price-box div:nth-child(1){
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.price-box div:nth-child(2){
+    position: absolute;
+    top: 0;
+    left: 180px;
+}
+
+.price-box div:nth-child(3){
+    position: absolute;
+    top: 0;
+    left: 500px;
+}
+
+.shop-box{
+    position: absolute;
+    top: 60px;
+    left: 0;
+}
+
+.shop-box h5{
+    float: none;
+    font-size: 18px;
+}
+
+.shop-box h5 i{
+    font-size: 14px;
+    font-style: normal;
+}
+
+.shop-box p{
+    margin-top: 10px;
+    float: left;
+    width: 100px;
+}
+
+.shop-box #shop-check{
+    float: none;
+    position: absolute;
+    top: 0;
+    left: 270px;
+}
+
+.shop-btn{
+    position: absolute;
+    top: 75%;
+    left: 0;
+    width: 20%;
+    height: 6vh;
+    background: #39B867;
+    font-size: 14px;
+    text-align: center;
+    line-height: 5vh;
+    color: #fff;
+}
+
+
+/*比较信息 add by ljz accord by hmn mendian*/
+/*
+input,button,select,textarea{outline:none}
+textarea{resize:none}
+table{
+   	border-collapse: collapse;
+}
+
+#data{
+	font-size: 12px;
+	border: 1px solid #dbdbdb;
+	line-height: 20px;
+	width: 1028px;
+	margin: 20vh auto 0;
+	color: #333;
+	font-size: 16px;
+}
+#data caption {
+	font-size: 14px;
+	line-height: 22px;
+	font-weight: bold;
+	text-align: center;
+	text-indent: 10px;
+}
+#data thead {
+	font-size: 12px;
+	line-height: 22px;
+	font-weight: bold;
+	text-align: center;
+	text-indent: 10px;
+}
+
+#data tr{
+	height: 50px;
+}
+
+#data th{
+	border: 1px solid #dbdbdb;
+	background: #f5f5f5;
+}
+*/
+
+/*modify by ljz*/
+input,button,select,textarea{outline:none}
+textarea{resize:none}
+table{
+   	border-collapse: collapse;
+}
+
+#comparePrice{
+	font-size: 12px;
+	border: 1px solid #dbdbdb;
+	line-height: 20px;
+	width: 1028px;
+	margin: 20vh auto 0;
+	color: #333;
+	font-size: 16px;
+}
+#comparePrice caption {
+	font-size: 14px;
+	line-height: 22px;
+	font-weight: bold;
+	text-align: center;
+	text-indent: 10px;
+}
+#comparePrice thead {
+	font-size: 12px;
+	line-height: 22px;
+	font-weight: bold;
+	text-align: center;
+	text-indent: 10px;
+}
+
+#comparePrice tr{
+	height: 50px;
+}
+
+#comparePrice th{
+	border: 1px solid #dbdbdb;
+	background: #f5f5f5;
+}

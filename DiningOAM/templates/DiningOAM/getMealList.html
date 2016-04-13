@@ -1,0 +1,193 @@
+{% load staticfiles %}
+<div class="right01"><img src="{% static 'DiningOAM/images/04.gif' %}" /> 菜品统计 &gt; <span>菜品列表</span></div>
+<div id="getAllMeal">
+     <div class="text-c"> 菜品名称：
+    {#			<div class="text-c"> 日期范围：#}
+    {#                <input type="text" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" class="input-text Wdate" style="width:120px;" name="logmin" />#}
+    {#                -#}
+    {#                <input type="text" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;" name="logmax" />#}
+        <input type="text" name="meal-name" id="meal-key" placeholder=" 请输入" style="width:250px" class="input-text">
+        <select name='meallist-house' id = "meal-house_id" style="width:80px;height:30px;font-size:14px;padding-top:0px;">
+            {% for item in house_info%}
+                <option value="{{ item.house_id }}">{{ item.house_name }}</option><!--这里需要动态获取当前的分店名和id，并且动态增加-->
+            {% endfor %}
+        </select>
+        <button name="" id="meallist-btn" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+    </div>
+    <div id="meal-caculate">
+    {#<div class="box-height cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onClick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onClick="picture_add('新加菜品','picture-add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 新加菜品</a></span> <span class="r">共有数据：<strong>{{ meal_count }}</strong> 条</span> </div>#}
+    <div class="box-height cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a class="btn btn-primary radius" onClick="show_menu(7)" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 新加菜品</a></span> <span class="r">共有数据：<strong>{{ meal_count }}</strong> 条</span> </div>
+        <div class="mt-20">
+        <table class="table table-border table-bordered table-bg table-hover table-sort">
+            <thead>
+                <tr class="text-c">
+{#                            <th width="40"><input name="" type="checkbox" value=""></th>#}
+                    <th width="80">菜品ID</th>
+                    <th width="100">分店ID</th>
+                    <th width="100">分类ID</th>
+                    <th width="60">名称</th>
+                    <th>缩略图</th>
+                    <th width="100">菜品内容</th>
+                    <th width="60">评价数量</th>
+                    <th width="60">菜品价格</th>
+                    <th width="100">添加时间</th>
+                    <th width="80">操作</th>
+                </tr>
+            </thead>
+            <tbody id = "mealist">
+            {% for meal in meal_list %}
+                <tr class="text-c">
+{#                            <td><input name="" type="checkbox" value=""></td>#}
+{#                          <td>{{ meal.id }}</td><!--修改为meal_id-->#}
+                    <td>{{ meal.meal_id }}</td>
+                    <td>{{ meal.house_id }}</td>
+                    <td>{{ meal.category_id }}</td>
+                    <td>{{ meal.name }}</td>
+    {#                    <td>{{ meal.avatar_url }}</td>#}
+                    <td><img src="{{meal.avatar_url}}" width="100px" height="60"></td>
+                    <td>{{ meal.detail_content }}</td>
+                    <td>{{ meal.judge_count }}</td>
+                    <td>{{ meal.meal_price }}</td>
+                    <td>{{ meal.add_time }}</td>
+    {#                            暂未实现菜品下架功能，故删除该选项#}
+    {#                            <td class="td-manage"><a style="text-decoration:none" onClick="picture_stop(this,'10001')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="picture_edit('图库编辑','picture-add.html','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="picture_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>#}
+                    <td class="td-manage"><a style="text-decoration:none" class="ml-5" onClick="meal_edit('{{ meal.id }}','{{ meal.house_id }}')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="meal_del('{{ meal.id }}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <div id="del_result"></div>
+</div>
+
+{%comment%}
+<div class="text-c"> 菜品名称：
+{#			<div class="text-c"> 日期范围：#}
+{#                <input type="text" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" class="input-text Wdate" style="width:120px;" name="logmin" />#}
+{#                -#}
+{#                <input type="text" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;" name="logmax" />#}
+    <input type="text" name="meal-name" id="meal-key" placeholder=" 请输入" style="width:250px" class="input-text">
+    <select name='meallist-house' id = "meal-house_id" style="width:80px;height:30px;font-size:14px;padding-top:0px;">
+        {% for item in house_info%}
+            <option value="{{ item.house_id }}">{{ item.house_name }}</option><!--这里需要动态获取当前的分店名和id，并且动态增加-->
+        {% endfor %}
+    </select>
+    <button name="" id="meallist-btn" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+</div>
+<div id="meal-caculate">
+{#<div class="box-height cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onClick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onClick="picture_add('新加菜品','picture-add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 新加菜品</a></span> <span class="r">共有数据：<strong>{{ meal_count }}</strong> 条</span> </div>#}
+<div class="box-height cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a class="btn btn-primary radius" onClick="show_menu(7)" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 新加菜品</a></span> <span class="r">共有数据：<strong>{{ meal_count }}</strong> 条</span> </div>
+    <div class="mt-20">
+    <table class="table table-border table-bordered table-bg table-hover table-sort">
+        <thead>
+            <tr class="text-c">
+{#                <th width="40"><input name="" type="checkbox" value=""></th>#}
+                <th width="80">菜品ID</th>
+                <th width="100">分店ID</th>
+                <th width="100">分类ID</th>
+                <th width="60">名称</th>
+                <th>缩略图</th>
+                <th width="100">菜品内容</th>
+                <th width="60">评价数量</th>
+                <th width="60">菜品价格</th>
+                <th width="100">添加时间</th>
+                <th width="80">操作</th>
+            </tr>
+        </thead>
+        <tbody id = "mealist">
+        {% for meal in meal_list %}
+            <tr class="text-c">
+{#                <td><input name="" type="checkbox" value=""></td>#}
+{#                <td>{{ meal.id }}</td><!--修改为meal_id-->#}
+                <td>{{ meal.meal_id }}</td>
+                <td>{{ meal.house_id }}</td>
+                <td>{{ meal.category_id }}</td>
+                <td>{{ meal.name }}</td>
+{#                    <td>{{ meal.avatar_url }}</td>#}
+                <td><img src="{{meal.avatar_url}}" width="100px" height="60"></td>
+                <td>{{ meal.detail_content }}</td>
+                <td>{{ meal.judge_count }}</td>
+                <td>{{ meal.meal_price }}</td>
+                <td>{{ meal.add_time }}</td>
+{#                            暂未实现菜品下架功能，故删除该选项#}
+{#                            <td class="td-manage"><a style="text-decoration:none" onClick="picture_stop(this,'10001')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="picture_edit('图库编辑','picture-add.html','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="picture_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>#}
+                <td class="td-manage"><a style="text-decoration:none" class="ml-5" onClick="meal_edit('{{ meal.id }}', '{{ meal.house_id }}')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="meal_del('{{ meal.meal_id }}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+<div id="del_result"></div>
+{% endcomment %}
+
+<script>
+    $('#meallist-btn').click(function(){
+{#        var meal_name = $('input[name="meal-name"]').val();#}
+{#        var id = $('select[name="meallist-house"]').val();#}
+        //alert('enter mealist-btn')
+        var meal_name = $('#meal-key').val();
+        var id = $('#meal-house_id').val();
+        if (meal_name == '')//如果没有输入查询关键字，则不返回min或max
+        {
+            _data = {
+            house_id:id
+            };
+        }
+        else
+        {
+            _data = {
+            name:meal_name,
+            house_id:id
+            };
+        }
+        $.post('/DiningOAM/getMealList/',_data, function (data) {
+{#            $('#meal-caculate').html(data);#}
+{#            $('#getAllMeal').html(data);#}
+            $('#mshli-6').html(data);
+        }, 'html');
+    });
+
+    function meal_del(id)
+    {
+        if (confirm("您确定要删除该菜品信息吗？"))
+        {
+{#            house_id = $('select[name="judge-house"]').val();//这里能否成功获取当前查询的店面id？#}
+            house_id = $('#meal-house_id').val();
+            alert('house_id:'+house_id);
+            _data = {
+                id:id,
+                house_id:house_id
+            }
+            $.post('/DiningOAM/delMeal/', _data, function (data) {
+{#                $('#meal-caculate').html(data);#}
+                $('#del_result').html(data);
+                data['result'] == 'success' ? alert('删除成功'):alert('删除失败：'+data['atach_info']);
+                if(data['result'] == 'success')
+                {
+                    var index = $(this).index();
+                    getMealList(index);
+                }
+                console.log('getAllMeal:', data);
+            }, 'json');
+
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    /*菜品请求数据 这里的house_id设置为1 fortest*/
+    function getMealList (iNow){
+        $.post('/DiningOAM/getMealList/', {'type': iNow}, function (data) {
+    {#        $('#meal-caculate').eq(iNow).html(data);#}
+{#            $('#getAllMeal').eq(iNow).html(data);#}
+            $('#mshli-6').eq(iNow).html(data);
+        }, 'html');
+    }
+</script>
+
+

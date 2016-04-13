@@ -1,0 +1,219 @@
+<!doctype html>
+<html>
+<head>
+{% load staticfiles %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>购物车结算</title>
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/shopping.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/index.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/dom.css' %}">
+</head>
+
+<body>
+
+    <div class="box">
+        <p class="box-margin"></p>
+        <p class="box-head-bd"></p>
+
+        <a class="box-im" id="box-im" href="http://xiangeqwd.9xi.com/DiningServer/modifyMyDetailInfo/?user_id={{user.id}}" style="display: block;" >
+            {% if not user.username or not user.phone or not user.user_location %}
+                <p>请填写送餐信息</p>
+                <p></p>
+            {% else %}
+                <p>{{ user.username }}&nbsp;&nbsp;&nbsp;{{ user.phone }}</p>
+                <p>{{ user.user_location }}{{user.door}}</p>
+            {% endif %}
+            <p>
+                <img src="{% static 'DiningServer/images/shopping/right.png' %}">
+            </p>
+        </a>
+        <div class="box-footer">
+        	<p>送达时间</p>
+        	<select  id='arriveTime'>
+            {% if times %}
+                {% for item in times %}
+                    <option value='{{item}}' name="send_time">{{ item }}</option>
+                {% endfor %}
+            {% else %}
+                <option value='立即送达'>立即送达</option>
+            {% endif %}
+        	</select>
+        </div>
+<!--尾部-->
+        <div class="box-food">
+            <div id="container" class="container-box ">
+                <div class="section pd6" id="st0" style="display: block;">
+                {% for meal in meals.meal_list %}
+                    <div class="prt-lt" style="width:100%; border:none;"  id="{{ meal.meals_id }}" >
+                        <div class="lt-lt">
+                            {% if meal.avatar_url %}
+                                <img src="{{ meal.avatar_url }}">
+                            {% else %}
+                                 <img src="{% static 'DiningServer/images/index/prt_2.jpg' %}">
+                             {% endif %}
+                        </div>
+                        <div class="lt-ct">
+                            <p>{{ meal.meal_name }}</p>
+                            <p class="pr">¥&nbsp;<span class="price">{{ meal.meal_price }}</span>&nbsp;&nbsp;&nbsp;*&nbsp;{{ meal.buy_count }}<div>配送费 ¥<span class="dfee">&nbsp;&nbsp;{{ delivery_fee }}</span></div></p>
+                                
+                        </div>
+                           
+                    </div>
+                {% empty %}
+                    <a href="javascript:;">您还没有选餐，快去选餐吧...</a>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div id="footer-box">
+            <div class="ft-lt" id="ft-lt">
+                <img src="{% static 'DiningServer/images/index/shop.png' %}" class="ft-lt-img" id="cart-btn">
+                <p class="footer-p">合计:<span id="total" class="total">{{ total_fee }}元</span><span class="nm">(<label class="share">{{ count }}</label>份)</span></p>
+                <span class="share" id="ft-span">{{ count }}</span>
+            </div>
+            <div class="ft-rt" id="change-success">去付款</div>
+        </div>
+        <!--跳转按钮-->
+            <div class="pos-fixed">
+            <a class="pos-ordering"  href="http://xiangeqwd.9xi.com/DiningServer/index/">
+                <img src="{% static 'DiningServer/images/index/log1a.png' %}" class="post-bg">
+                <p class="pos-size2">订餐</p>
+            </a>
+
+            <a  class="pos-order" href="http://xiangeqwd.9xi.com/DiningServer/getOrdersByType/">
+                <img src="{% static 'DiningServer/images/index/log2.png' %}" class="post-bg2">
+                <p class="pos-size">订单</p>
+            </a>
+
+            <a class="pos-page" href="http://xiangeqwd.9xi.com/DiningServer/listMyDetailInfoPage/">
+                <img src="{% static 'DiningServer/images/index/log3.png' %}" class="post-bg3">
+                <p class="pos-size">地址</p>
+            </a>
+
+        </div>
+    </div>
+
+
+    <!-- 购物车 -->
+    <div class="ft-shop" id="ft-shop">
+        <p class="shop-top">
+            <span><i></i>&nbsp;&nbsp;&nbsp;购物车</span><!-- 
+            <span id="shop-clear"><i></i>清空购物车</span> -->
+        </p>
+        <ul class="shop-ul" id="shop-ul">
+            {% for meal in meals.meal_list %}
+            <li>
+                <span><i class="ul-i"></i><i class="ul-meal">{{ meal.meal_name }}</i></span>
+                <div class="shop-div">
+                    <input type="button" class="minus-a"  value="-" style="display: none;">
+                    <input type="text" class="result-a" value="{{ meal.buy_count }}" disabled="true">
+                    <input type="button" class="add-a" value="+" style="display: none;">
+                </div>
+            </li>
+            {% empty %}
+                <a href="javascript:;">您还没有选餐，快去选餐吧...</a>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="pos-bg"></div>
+
+
+
+<script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/fastclick.js' %}"></script>
+<script>
+
+
+//这里是上一个页面选择的菜品id和对应的数量
+var json = {
+    {% for meal in meals.meal_list %}
+        "{{ meal.meals_id }}": {{ meal.buy_count }},
+    {% endfor %}
+};
+
+//这里是服务器传过来的总份数
+var count = {{ count }};
+
+//这里是服务器传过来的合计多少元
+var sum = {{ total_fee }};
+
+var $changeBtn = $("#change-success")
+            , url = '/DiningServer/createOrder/';
+
+    $changeBtn.on ("click", function () {
+        json['arrive-time']=$('#arriveTime').val();
+        json["remarks"]=$("#im-ra").val();
+        json["username"]=$("#im-rn").val();
+        json["phone"]=$("#im-rp").val();
+        json["location"]=$("#im-rl").val();
+        json["send_time"]=$("#arriveTime").val();
+        json["bill_id"]='{{bill_id}}';
+        json["sum"]='{{sum}}';
+        StandardPost(url, json);
+    });
+
+
+    function StandardPost(url,args) {
+        var body = $(document.body),
+            form = $("<form method='post'></form>"),
+            input;
+        form.attr({"action":url});
+        $.each(args,function(key,value){
+            input = $("<input  type='hidden'>");
+            input.attr({"name":key});
+            input.val(value);
+            form.append(input);
+         });
+
+        form.appendTo(document.body);
+        form.submit();
+        document.body.removeChild(form[0]);
+    };
+
+
+
+
+
+    // 购物车
+
+    $('#cart-btn').on('click',function(){
+        var oshare = $('.share').text();
+        if (oshare>=1) {
+            $('#ft-shop').addClass('on');
+            $('#ft-shop').animate({bottom: '1.15rem'});
+            $('.pos-bg').addClass('on');
+            document.body.style.overflow = "hidden";
+        }
+    });
+
+    $('.pos-bg').on('click',function(){
+        $('#ft-shop').removeClass('on');
+        $('#ft-shop').animate({bottom: '0'}); 
+        $('#phone').removeClass("on");
+        $('.pos-bg').removeClass('on');
+        $('.pos-bg').css('z-index','1100'); 
+        document.body.style.overflow = "auto";
+    });
+
+
+    // 购物车
+
+    var a =$('.shop-ul li').length;
+
+
+    // 超出5个多出滚动条
+    if ( a >= 6 ) {
+        $('.shop-ul').css('height','2.75rem');
+        $('.shop-ul').css('overflow-y','scroll');
+    }
+
+</script>
+</body>
+</html>

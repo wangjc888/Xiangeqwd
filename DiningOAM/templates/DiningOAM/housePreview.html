@@ -1,0 +1,246 @@
+{% load staticfiles %}
+{#<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main.css?v=1.0" />#}
+{#<script src="http://cache.amap.com/lbs/static/es5.min.js"></script>#}
+
+<div class="right01"><img src="{% static 'DiningOAM/images/04.gif' %}" /> 菜品统计 &gt; <span>修改店面</span></div>
+<div class="store-box">
+    <div id="container"></div><!--这里的id需要唯一，待确定-->
+    <div id="myPageTop">
+        <table>
+            <tr>
+                <td>
+                    <label>按关键字搜索：</label>
+                </td>
+                <td class="column2">
+                    <label>左击获取经纬度：</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" placeholder="请输入关键字进行搜索" id="tipinput">
+                </td>
+                <td class="column2">
+                    <input type="text" readonly="true" id="lnglat" name="gps_info" value="{{ gpsInfo }}">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="box-store">
+        <p>店铺ID&nbsp;&nbsp;&nbsp;
+           <input type="text" readonly="true" placeholder="{{ house_id }}" name="edit_house_id" />
+        </p>
+        <p name="name1">店铺名字&nbsp;&nbsp;&nbsp;
+           <input type="text" value="{{ house_name }}" name="house_name" id="edit_name-id"/>
+        </p>
+
+        <p>店铺地址&nbsp;&nbsp;&nbsp;
+           <input type="text" value="{{ address }}" name="address" id="edit_address-id"/>
+        </p>
+
+        <p>店铺联系电话&nbsp;&nbsp;&nbsp;
+           <input type="text" value="{{ phone }}" name="phone" id="edit_phone-id"/>
+        </p>
+
+        <p>登录账号&nbsp;&nbsp;&nbsp;
+           <input type="text" value="{{ username }}" name="username" id="edit_username-id"/>
+        </p>
+
+        <p>登录密码&nbsp;&nbsp;&nbsp;
+           <input type="password" value="{{ password }}" name="password1" id="edit_password1-id"/>
+        </p>
+        <p>密码确认&nbsp;&nbsp;&nbsp;
+           <input type="password" value="{{ password }}" name="password2" id="edit_password2-id"/>
+        </p>
+        <p>账户类型&nbsp;&nbsp;&nbsp;
+        <select name="adminjudge" id="edit_adminjudge-id">
+            {% for item in adminType %}
+                <option value="{{ item.value }}">{{ item.type }}</option>
+            {% endfor %}
+        </select>
+        </p>
+        <button type="submit" class="store-but" onClick="house_edit_save('{{ house_id }}')"><a href="javascript:;">保存</a></button>
+   </div>
+</div>
+
+
+{#<link href="{% static 'DiningOAM/css/style.css' %}" rel="stylesheet" type="text/css" />#}
+<link href="{% static 'DiningOAM/css/store.css' %}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+{#<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=bd87735685cc1e701ca941163efef17a&plugin=AMap.Autocomplete"></script>#}
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=bd87735685cc1e701ca941163efef17a&callback='init'"></script>
+<script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+
+<script>
+    function init(){
+        var map = new AMap.Map("container", {
+            resizeEnable: true
+        });
+    }
+
+            //为地图注册click事件获取鼠标点击出的经纬度坐标
+    var clickEventListener = map.on('click', function(e) {
+        document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
+    });
+    var auto = new AMap.Autocomplete({
+        input: "tipinput"
+    });
+    AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+    function select(e) {
+        if (e.poi && e.poi.location) {
+            map.setZoom(15);
+            map.setCenter(e.poi.location);
+        }
+    }
+
+
+    /*
+    var map = new AMap.Map("container", {
+        resizeEnable: true
+    });
+        //为地图注册click事件获取鼠标点击出的经纬度坐标
+    var clickEventListener = map.on('click', function(e) {
+        document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
+    });
+    var auto = new AMap.Autocomplete({
+        input: "tipinput"
+    });
+    AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+    function select(e) {
+        if (e.poi && e.poi.location) {
+            map.setZoom(15);
+            map.setCenter(e.poi.location);
+        }
+    }*/
+
+{#    function house_edit_save(house_id){#}
+{#        alert('保存当前修改的店面信息')#}
+{#        var gpsInfo = document.getElementById('edit_lnglat').value;#}
+{#        var oHouseName = document.getElementById('edit_name-id').value;#}
+{#        var oAddress = document.getElementById('edit_address-id').value;#}
+{#        var oPhone = document.getElementById('edit_phone-id').value;#}
+{#        var oUsername = document.getElementById('edit_username-id').value;#}
+{#        var oPassword1 = document.getElementById('edit_password1-id').value;#}
+{#        var oPassword2 = document.getElementById('edit_password2-id').value;#}
+{#        var oAdminjudge = document.getElementById('edit_adminjudge-id').value;#}
+{#        /**/#}
+{#        console.log('gps: ',gpsInfo, 'house_name: ',oHouseName, 'address: ',oAddress, 'phone: ', oPhone,#}
+{#                'username: ',oUsername, 'password1: ',oPassword1, 'password2: ', oPassword2 ,'adminjudge: ',oAdminjudge);#}
+{##}
+{#        if(gpsInfo == '')#}
+{#        {#}
+{#            alert('请在地图中左击获取店面经纬度');#}
+{#            return false;#}
+{#        }#}
+{#        else if( oHouseName == '')#}
+{#        {#}
+{#            alert('店面名字不能为空');#}
+{#            return false;#}
+{#        }else if( oAddress == '')#}
+{#        {#}
+{#            alert('店面地址不能为空');#}
+{#            return false;#}
+{#        }else if( oPhone == '')#}
+{#        {#}
+{#            alert('店铺联系电话不能为空');#}
+{#            return false;#}
+{#        }else if(oUsername == '')#}
+{#        {#}
+{#            alert('登录用户名不能为空');#}
+{#            return false;#}
+{#        }else if(oPassword1 != oPassword2)#}
+{#        {#}
+{#            alert('请重输入密码');#}
+{#            return false;#}
+{#        }else if(oPassword1 == '' || oPassword2 == '')#}
+{#        {#}
+{#            alert('登录密码不能为空');#}
+{#            return false;#}
+{#        }else#}
+{#        {#}
+{#/**/        _data = {#}
+{#                gps_info : gpsInfo,#}
+{#                house_name : oHouseName,#}
+{#                address : oAddress,#}
+{#                phone : oPhone,#}
+{#                username : oUsername,//for create log Account#}
+{#                password1 : oPassword1,#}
+{#                password2 : oPassword2,#}
+{#                adminjudge : oAdminjudge,#}
+{#                house_id: house_id,#}
+{#                flag: 1//如果是修改则为1，创建为0#}
+{#            };#}
+{#            $.post('/DiningOAM/addHouse/', _data, function(data) {#}
+{#                $('#mshli-5').html(data);#}
+{#                console.log('data:', data);#}
+{#                alert('data: '+data['result']);#}
+{#                data['result'] == 'success' ? alert('修改成功'):alert('修改失败'+data['atach_info']);#}
+{#                show_menu(5);#}
+{#            }, 'json');#}
+{#        }#}
+{#    }#}
+</script>
+<!--添加分店成功之后，弹出一个提示是否立即上传菜品的提示对话框还是只提示上传成功，不做其他处理？-->
+<!--更新分店信息的之后的操作是否同上？-->
+{% comment %}
+{% load staticfiles %}
+<style>
+    .preview-box{
+        position: absolute;
+        top: 100px;
+        right: 40%;
+        height: 50vh;
+        font-size: 18px;
+{#        position: relative;#}
+{#        width: 100%;#}
+    }
+
+    .house-preview{
+    "display":"block",
+    "z-index":"999",
+    "position":"absolute",
+    "left":"100px",
+    "top":m.top
+    }
+</style>
+<div class="house-preview" id="result">
+{% if houseInfo.flag %}
+    <div class="right01"><img src="{% static 'DiningOAM/images/04.gif' %}" /> 菜品统计 &gt; <span> 新加店面 &gt;</span><span> 店面预览</span></div>
+    <div class="store-box">
+            <div id="container"></div>
+            <div class="preview-box">
+                <p name="name1">店铺名字&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <input style="font-size: 18px;" type="text" readonly="true" placeholder="{{ houseInfo.house_name }}" name="house_name" id="name-id"/>
+                </p>
+
+                <p>店铺地址&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <input style="font-size: 18px;" type="text" readonly="true" placeholder="{{ houseInfo.house_address }}" name="address" id="address-id"/>
+                </p>
+
+                <p>店铺联系电话&nbsp;&nbsp;&nbsp;
+                   <input style="font-size: 18px;" type="text" readonly="true" placeholder="{{ houseInfo.phone }}" name="phone" id="phone-id"/>
+                </p>
+
+                <p>经纬度&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <input style="font-size: 18px;" type="text" readonly="true" placeholder="{{ houseInfo.gps_info}}" name="latitude" id="gps-id"/>
+                </p>
+
+                <p>登录账号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <input style="font-size: 18px;" type="text" readonly="true" placeholder="{{ houseInfo.logname }}" name="username" id="username-id"/>
+                </p>
+
+                <p>登录密码&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <input style="font-size: 18px;" type="text" readonly="true" placeholder="{{ houseInfo.password }}" name="password1" id="password1-id"/>
+                </p>
+                <p>账户类型&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <input style="font-size: 18px;" type="text" readonly="true" placeholder="{{ houseInfo.type }}" name="type" id="adminjudge-id"/>
+                </p>
+                <button style="font-size: 18px;" type="submit" class="store-but" id="btnModify">返回修改</button>
+                <button style="font-size: 18px;" type="submit" class="store-but" id="btnModify">关闭预览</button>
+           </div>
+        </div>
+{% else %}
+    <p>fail</p>
+{% endif %}
+</div>
+{% endcomment %}

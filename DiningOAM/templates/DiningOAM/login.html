@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+{% load staticfiles %}
+<meta charset="utf-8">
+<title>登陆框</title>
+<link rel="stylesheet" type="text/css" href="{% static 'DiningOAM/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningOAM/css/single.css' %}">
+</head>
+{#redit by ljz#}
+<form action="/DiningOAM/sign/" method="post" id="loginId">
+<div class="single-box">
+    <div class="box-dl">
+        <p class="box-dlbk">后台管理登陆</p>
+        <div class="box-in clearfix">
+            <p><a href="javascript:;" class="box-inbg"></a></p>
+            <input type="text" placeholder="&nbsp;&nbsp;&nbsp;用户名" id="land" name="username">
+        </div>
+
+        <div class="box-in clearfix">
+            <p><a href="javascript:;" class="box-inbg2"></a></p>
+            <input type="password" placeholder="&nbsp;&nbsp;&nbsp;密码" id="pw"name="password">
+        </div>
+        <p class="box-inft" id="box-btn">登录</p>
+    </div>
+</div>
+</form>
+<script type="text/javascript" src="{% static 'DiningOAM/js/jquery-1.7.1.min.js' %}"></script>
+<script>
+    $('#box-btn').click(function(){
+        oName = $('#land').val();
+        oWord = $('#pw').val();
+        if (oName == '') {
+            alert('用户名字不能为空');
+            return false;
+        }
+        else if(oWord == ''){
+            alert('密码不能为空');
+            return false;
+        }
+        else{
+            //alert('正在跳转，请稍后');
+            $('#loginId').submit();
+        }
+    })
+</script>
+</body>
+</html>
+{% comment %}
+<!doctype html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+	<meta charset="UTF-8">
+	<title>登录框</title>
+<link href="{% static 'DiningOAM/css/style.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'DiningOAM/css/store.css' %}" rel="stylesheet" type="text/css" />
+</head>
+<body style="background: #ccc">
+    <div class="bak-box" id="bak-box">
+        <form method="post" action="/DiningOAM/sign/">
+        <div class="bak-auto">
+            <p>用户名： <input type="text" placeholder="请输入您的用户名" name="username"/></p>
+            <p>密码 ： <input type="password" placeholder="请输入您的密码" name = "password"/></p>
+            <input type="submit" value="登录">
+        </div>
+        </form>
+    </div>
+</body>
+</html>
+{% endcomment %}

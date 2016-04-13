@@ -1,0 +1,53 @@
+{% load staticfiles %}
+<div class="right01"><img src="{% static 'DiningOAM/images/04.gif' %}" /> 菜品统计 &gt; <span>修改菜品</span></div>
+<div>
+    <div class="box-kell">
+        <form action="/DiningOAM/updateMeal/" name="addForm" id="addForm" enctype="multipart/form-data" method="POST"><!--add multipart for uploadPic-->
+        <p>菜品ID&nbsp;&nbsp;&nbsp;
+            <input type="text" value="{{ meal_id }}" name="meal_id" id="meal_id-edit" readonly="true"/>
+        </p>
+        <p>菜名&nbsp;&nbsp;&nbsp;
+            <input type="text" value="{{ meal_name }}" name="name" id="meal_name-edit"/>
+        </p>
+        <p>菜品价格&nbsp;&nbsp;&nbsp;
+            <input type="text" value="{{ meal_price }}" name="meal_price" id="meal_price-edit"/>
+        </p>
+        <p>菜品内容&nbsp;&nbsp;&nbsp;
+            <input type="text" value="{{ meal_content }}" name="detail_content" id="content-edit"/>
+        </p>
+        <div id="enterUpdateMeal">
+            <p class="branch-box">分店&nbsp;&nbsp;&nbsp;
+                <select name="house_name" id="house_name-edit" disabled="disabled" form="addForm">
+                    {% for item in house_list %}
+                        <option value="{{ item.house_name }}">{{ item.house_name }}</option>
+                    {% endfor %}
+                </select>
+            </p>
+            <p class="fication-box">分类&nbsp;&nbsp;&nbsp;
+                <select name="category_id" id="category_id-edit" form="addForm">
+                    {% for item2 in category_list%}
+                        <option value="{{ item2.id }}">{{ item2.name }}</option>
+                    {% endfor %}
+                </select>
+            </p>
+        </div>
+
+        <table  border="0" cellspacing="0" cellpadding="0" class="kell-img" style="width: 150px; height: 180px;;">
+            <tbody>
+                <tr>
+                    <td height="101" align="center">
+{#                                 <td height="101" align="center" name="image_src">#}
+                        <div id="localImag"><img id="preview" src="{{ avatar_url }}" width="150" height="180" style="display: block; width: 150px; height: 180px;"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" style="padding-top:10px;"><input type="file" name="picfile" id="doc" style="width:150px;" onchange="javascript:setImagePreview();"></td>
+                </tr>
+            </tbody>
+        </table>
+{#                <input type="submit" value="提交" class="kell-but" id="addModify" onclick="modifyItem()"/>#}
+        <input type="submit" value="保存" class="kell-but" id="mealEdit" onClick="meal_edit_save('{{meal_id}}','{{ house_id }}')"/>
+        </form>
+    </div>
+    <div id="add_meal_result"></div>
+</div>

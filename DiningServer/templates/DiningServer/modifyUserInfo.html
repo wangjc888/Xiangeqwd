@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+     {% load staticfiles %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>家家订餐</title>
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/index.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/userInfoPage.css' %}">
+</head>
+<body style="background:#E5E5E5">
+<div class="data">
+    <div class="data-head pd20">个人资料修改</div>
+    <form action="/DiningServer/modifyMyDetailInfo/" method="POST" id="form">
+        <ul class="data-box">
+            <li class="data-area pd20">
+                <div class="area-text">真实姓名</div>
+                <input  name="username"  class="area-change" type="text" value="{{ username }}" placeholder="真实姓名"/>
+            </li>
+            <li class="data-area pd20">
+                <div class="area-text">性别</div>
+                <div class="area-change">
+                    <!-- 1男2女> -->
+                    {% if sex %}
+                        {% if sex == 1 %}
+                        <input name="pop" type="radio" value="man" checked="true"/>&nbsp;男&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="woman" />&nbsp;女&nbsp;&nbsp;
+                        {% elif sex == 2 %}
+                        <input name="pop" type="radio" value="man"/>&nbsp;男&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="woman"  checked="true"  />&nbsp;女&nbsp;&nbsp;
+                        {% endif %}
+                    {% else %}
+                        <select name="sex" id="sex">
+                            <option value="1">男</option>
+                            <option value="2">女</option>
+                        </select>
+                    {% endif %}
+                </div>
+            </li>
+            <li class="data-area pd20">
+                <div class="area-text">出生年月</div>
+                <input id="birthday" name="birthday" class="mt20 laydate-icon area-change" onClick="laydate({elem: '#birthday'})">0
+            </li>
+            <li class="data-area pd20">
+                <div class="area-text">联系电话</div>
+                <input name="phone" class="area-change" type="text" value="{{ phone }}" placeholder="输入联系电话" />
+            </li>
+            <li class="data-area pd20">
+                <div class="area-text">联系邮箱</div>
+                <input name="email" class="area-change" type="text" value="{{ email }}" placeholder="输入联系邮箱" />
+            </li>
+            <li class="data-area pd20">
+                <div class="area-text">联系地址</div>
+                <input name="location" class="area-change" type="text" value="{{ location }}" placeholder="输入联系地址" />
+            </li>
+        </ul>
+        <div class="submit-box">
+            <input name="submit" type="submit" class="data-submit" value="保存修改" id="sub">
+        </div>
+    </form>
+</div>
+<!--用户信息界面，在该界面用户可以修改信息并保存，保存成功后依然跳转回该界面-->
+<script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/fastclick.js' %}"></script>
+<script>
+    var oName = document.getElementsByName('username').val();
+    var oTime = document.getElementsByName('time').val();
+    var oPhone = document.getElementsByName('phone').val();
+    var oEmail = document.getElementsByName('email').val();
+    var oLocat = document.getElementsByName('location').val();
+
+    $('#sub').click(function(){
+        if(oName == ''){
+            alert('用户名字不能为空');
+            return false;
+        }
+        else if(oTime == ''){
+            alert('用户出生年月日不能为空');
+            return false;
+        }
+        else if(oPhone == ''){
+            alert('用户电话不能为空');
+            return false;
+        }
+        else if(oPhone!=''){
+            var reg=/^1[3458]\d{9}$/;
+            if(!reg.test(oPhone)){
+                alert('手机号码格式不正确');
+                return false;
+            }
+        }
+        else if(oEmail == ''){
+            alert('用户邮箱不能为空');
+            return false;
+        }
+        else if(oEmail !=''){
+            var mail=/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+            if(!mail.test(oEmail)){
+                alert('邮箱格式不正确');
+                return false;
+            }
+        }
+        else if(oLocat == ''){
+            alert('用户地址不能为空');
+            return false;
+        }
+        else{
+            $('#form').submit();
+        
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+
+input,button,select,textarea{outline:none}
+textarea{resize:none}
+
+.cd{
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+}
+
+.box{
+	height: 96px;
+	border-top:6px solid #ff644e;
+	border-bottom: 1px solid #dbdbdb;
+}
+
+.cont-nav{
+	width: 1200px;
+	height: 96px;
+	text-align: center;
+	line-height: 96px;
+	margin: 0 auto;
+}
+
+.cont-nav p:nth-child(1){
+	float: left;
+	font-size: 24px;
+	font-weight: 600;
+	color: #333;
+}
+
+.cont-nav a:nth-child(2),.cont-nav p:nth-child(3){
+	float: right;
+	color: #666;
+}
+
+.cont-nav a:nth-child(2){
+	font-size: 14px;
+    position: absolute;
+    right: 60px;
+}
+
+.cont-nav a:hover{
+    color: #62c;
+}
+
+.cont-nav p:nth-child(3){
+	font-size: 16px;
+	/*margin-right: 20px;*/
+    position: relative;
+    right: 170px;
+}
+
+
+
+.cont-box{
+	width: 1200px;
+	margin: 0 auto;
+    margin-bottom: 5px;/*add by ljz*/
+	border:1px solid #dbdbdb;
+	height: 529px;
+	background: #f8f8f6;
+}
+
+.cont-top{
+	height: 80px;
+	border-bottom: 1px solid #dbdbd9;
+	font-size: 16px;
+	line-height: 80px;
+	color: #333;
+	padding-left: 39px;
+}
+
+
+/*内容*/
+
+
+
+/*左边内容*/
+
+
+/*左边标题*/
+.cont-left{
+	float: left;
+	width: 667px;
+}
+
+.cont-tit{
+	height: 51px;
+	border-bottom: 1px solid #dbdbd9;
+	border-right: 1px solid #dbdbd9;
+	line-height: 51px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #4c4c4c;
+}
+
+.cont-tit div:nth-child(1){
+	float: left;
+	margin-left: 39px;
+}
+
+.cont-tit div:nth-child(2){
+	float: right;
+	width: 167px;
+	margin-right: 40px;
+}
+
+.left-a p:nth-child(1){
+	float: left;
+}
+
+.left-a p:nth-child(2){
+	float: right;
+}
+
+/*内容详情*/
+
+.cont-ctt{
+	height: 263px;
+	border-bottom: 1px solid #dbdbd9;
+	border-right: 1px solid #dbdbd9;
+	overflow-y: scroll; 
+}
+
+.cont-ctt li:first-child{
+	padding-top: 40px;
+}
+
+.cont-ctt li:last-child{
+	padding-bottom: 40px;
+}
+
+.ctt-box div:nth-child(1){
+	float: left;
+	margin-left: 39px;
+	color: #666;
+	font-size: 14px;
+	height: 40px;
+	line-height: 40px;
+}
+
+.ctt-box div:nth-child(2){
+	float: right;
+	width: 167px;
+	margin-right: 40px;
+}
+
+.ctt-right p:nth-child(1){
+	float: left;
+	line-height: 40px;
+	color: #666;
+}
+
+.ctt-right p:nth-child(2){
+	float: right;
+	line-height: 40px;
+	color: #666;
+}
+
+/*价格*/
+.cont-tl{
+	height: 51px;
+	border-bottom: 1px solid #ccc;
+	border-right: 1px solid #dbdbd9;
+	line-height: 51px;
+	font-size: 14px;
+	color: #666;
+}
+
+.cont-tl p:nth-child(1){
+	float: left;
+	margin-left: 39px;
+}
+
+.cont-tl p:nth-child(2){
+	float: right;
+	margin-right: 56px;
+}
+
+.cont-total{
+	height: 80px;
+}
+
+
+.cont-total p:nth-child(1){
+	float: right;
+	padding-right: 50px;
+	border-right: 1px solid #dbdbd9;
+	text-align: center;
+	line-height: 80px;
+	font-size: 16px;
+	color: #333;
+}
+
+.cont-total p:nth-child(1) i{
+	font-size: 26px;
+	color: #ff644e;
+}
+
+
+/*右边内容*/
+
+.cont-right{
+	width: 533px;
+	height: 448px;
+	background: #fff;
+	float: left;
+	position: relative;
+}
+
+.cont-right p:nth-child(1){
+	height: 51px;
+	padding-left: 32px;
+	line-height: 51px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #4c4c4c;
+}
+
+.right-tact{
+	padding-top: 10px;
+	padding-left: 32px;
+}
+
+.right-tact li{
+	line-height: 36px;
+	font-size: 16px;
+	color: #333;
+}
+
+.cont-btn{
+	position: absolute;
+	right: 47px;
+	bottom: 40px;
+}
+
+.clearfix .cont-btn .btn-on{
+	float: left;
+	width: 136px;
+	height: 40px;
+	border-radius: 10px;
+	font-size: 16px;
+	text-align: center;
+	line-height: 40px;
+	background: #dbdbdb;
+	color: #333;
+	padding: 0;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.clearfix .cont-btn .btn-yes{
+	float: left;
+	width: 136px;
+	height: 40px;
+	border-radius: 10px;
+	font-size: 16px;
+	text-align: center;
+	line-height: 40px;
+	background: #ff644e;
+	color: #fff;
+	margin-left: 20px;
+	cursor: pointer;
+}
+
+
+/*订单详情*/
+
+/*已接订单*/
+.cont-reved{
+	height: 265px;
+	width: 1198px;
+	border:1px solid #dbdbdb;
+	margin: 40px auto 0;
+}
+
+.reved-left{
+	float: left;
+	border-right: 1px solid #dbdbdb;
+	border-bottom: 1px solid #dbdbdb;
+	width: 598px;
+}
+
+.reved-left p:nth-child(1),.reved-right p:nth-child(1){
+	height: 52px;
+	text-align: center;
+	line-height: 52px;
+	background: #f5f5f5;
+	color: #333;
+	font-size: 16px;
+	border-bottom: 1px solid #dbdbdb;
+}
+
+.left-tt,.right-tt{
+	height: 212px;
+	overflow-y: scroll;
+	background: #f8f8f6;
+}
+
+.left-tt li,.right-tt li{
+	line-height: 34px;
+	font-size: 14px;
+	color: #666;
+}
+
+.left-tt li div:nth-child(1){
+	float: left;
+	padding-left: 39px;
+}
+
+.left-tt li div:nth-child(2){
+	float: right;
+	padding-right:39px;
+}
+
+
+/*取消订单*/
+.reved-right{
+	float: left;
+	width: 599px;
+}
+
+.right-tt li{
+	padding-left: 39px;
+}

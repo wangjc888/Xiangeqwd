@@ -1,0 +1,112 @@
+{% load staticfiles %}
+<!--已接订单-->
+ {% comment %}
+    <div class="reved-left">
+        <p>已接订单</p>
+        <ul class="left-tt" id="ensure_order">
+            {% for item in sure_list%}
+            <li class="clearfix">
+                <div>{{ item.bill_id }}</div>
+                <div>{{ item.total }}</div>
+                <div>{{ item.add_time }}</div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="push_result"></div>
+
+    <!--取消订单-->
+    <div class="reved-right">
+        <p>取消订单</p>
+        <ul class="right-tt" id="cancel_order">
+            {% for item in cancel_list%}
+            <li class="clearfix">
+                <div>{{ item.bill_id }}</div>
+                <div>{{ item.total }}</div>
+                <div>{{ item.add_time }}</div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endcomment %}
+
+{% if flag == '1' %}
+{% for item in order_list%}
+<li class="clearfix">
+    <div><a href="javascript:;" onclick="getOrderDetails('{{ item.bill_id }}')" title="查看订单详情">{{ item.bill_id }}</a></div>
+    <div>{{ item.total }}</div>
+    <a style="float:right; width: 20px; height: 20px; margin-top: 7px; padding-right: 20px;" href="javascript:;" onClick="toPrint('{{item.bill_id}}')">
+        <img src="{% static 'DiningMealManage/images/dayin.png' %}" alt="" style="width: 100%;" title="打印订单"/>
+    </a>
+{#    <a href="/DiningMealManage/print_order/" style="float:right; width: 20px; height: 20px; margin-top: 7px; padding-right: 20px;">#}
+{#        <img src="{% static 'DiningMealManage/images/dayin.png' %}" alt="" style="width: 100%;"/>#}
+{#    </a>#}
+    <div style="float:left; margin-left: 25px;">{{ item.add_time }}</div>
+</li>
+{% endfor %}
+{% else %}
+{% for item in order_list%}
+<li class="clearfix">
+{#    <div>{{ item.bill_id }} &nbsp;&nbsp; {{ item.add_time }} &nbsp;&nbsp; {{ item.total }}</div>#}
+    <div><a href="javascript:;" onclick="getOrderDetails('{{ item.bill_id }}')" title="查看订单详情">{{ item.bill_id }}</a> &nbsp;&nbsp; {{ item.add_time }} &nbsp;&nbsp; {{ item.total }}</div>
+
+{#    <a href="" style="float:right; width: 20px; height: 20px; margin-top: 7px; padding-right: 20px;">#}
+{#        <img src="{% static 'DiningMealManage/images/dayin.png' %}" alt="" style="width: 100%;"/>#}
+{#    </a>#}
+{#    <div style="float:left; margin-left: 25px;">{{ item.add_time }}</div>#}
+</li>
+{% endfor %}
+{% endif %}
+
+
+{% comment %}
+<script>
+    function toPrint(order_id){
+        var _data;
+        alert('print.html/order_id,'+order_id);
+        _data = {
+            'order_id':order_id
+        };
+        $.post('/DiningMealManage/print_order/', _data, function (data) {
+            //$('#box').html(data);
+            //doPrint(data);
+        }, 'html');
+    }
+</script>
+
+<script>
+    function toPrint(order_id){
+        var _data;
+        //alert('toPrint/order_id,'+order_id);
+        _data = {
+            'order_id':order_id
+        };
+        $.post('/DiningMealManage/print_order/', _data, function (data) {
+            $('#box').html(data);
+            //alert('enter post print');
+            console.log('/DiningMealManage/print_order/', data);
+            //alert('enter post print');
+            doPrint(data);
+            //alert('end of post print');
+        }, 'html');
+    }
+
+    function doPrint(content) {
+        //打开一个新的窗体
+        //alert('deal_record.html/enter in doPrint');
+        var bdhtml=window.document.body.innerHTML;
+        var newWin = window.open('about:blank',"","");
+            //取得id为"order"的<div id="order"></div>之间的内容
+           //将取得的打印内容放入新窗体
+        newWin.document.write(content);
+           //刷新新窗体
+        newWin.document.location.reload();
+      //调用打印功能
+        newWin.print();
+           //打印完毕自动关闭新窗体
+        newWin.close();
+        //alert('end of doPrint');
+        //window.location='/DiningMealManage/pushPage/';
+    }
+</script>{% endcomment %}

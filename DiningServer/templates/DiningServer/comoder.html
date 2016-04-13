@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+{% load staticfiles %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>服务评价</title>
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/shopping.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/comoder.css' %}">
+</head>
+
+<body>
+
+    <div class="box-com">
+        
+        <div class="com-box">
+            <p class="com-kong"></p>
+
+            <div class="com-cont">
+                <div class="cont-text">
+                    <p>外卖骑士 &nbsp;&nbsp;配送员</p>
+                    {% if bill.ensure_send_time %}
+                    <p>送达时间 &nbsp;&nbsp;{{ bill.ensure_send_time }}</p>
+                    {% else %}
+                    <p>送达时间 &nbsp;&nbsp;</p>
+                    {% endif %}
+                    <p>配送服务&nbsp;&nbsp;
+                        <span class="js-star js-star1">
+                            <i class="off"></i>
+                            <i class="off"></i>
+                            <i class="off"></i>
+                            <i class="off"></i>
+                            <i class="off"></i>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="com-tlt">商品评价</div>
+            <div class="com-cont2">
+                <div class="com-text2">商品质量&nbsp;&nbsp;
+                    <span class="js-star js-star2">
+                        <i class="off"></i>
+                        <i class="off"></i>
+                        <i class="off"></i>
+                        <i class="off"></i>
+                        <i class="off"></i>
+                    </span>
+                </div>  
+            </div>
+
+            <ul class="com-key">
+                {% for meal in meals %}
+                <li>{{ meal.meal_name }}</li>
+                {% endfor %}
+            </ul>
+
+            <div class="com-tlt">商品评价</div>
+            <div class="com-tat">
+                <textarea name="" id="" cols="30" rows="10" class="com-tc" placeholder="（至少输入10字）您的意见很重要!
+来点评一下吧"></textarea>
+            </div>
+
+
+        </div>
+
+
+        <div class="com-btn" id="js-submit">提交评价</div>
+        
+
+    </div>
+
+
+<script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/star.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/fastclick.js' %}"></script>
+    <script>
+
+        var $star = $('.js-star');
+        $star.each(function (index,ele){
+            operated($(ele).find('.off'));
+        })
+
+        $('#js-submit').on('click',function (){
+            var star1 = $('.js-star1').find('.on').length;
+            var star2 = $('.js-star2').find('.on').length;
+            var text = $('.com-tat textarea').val().trim();
+            if (star1==0 || star2==0 ) {
+                alert('请打分');
+                return false;
+            }
+
+            $.ajax({
+                url:    "/DiningServer/judgeMeal/",
+                data:{
+                    "bill_id": '{{bill.id}}',
+                    "judge_meal":    star1,
+                    "judge_speed":   star2,
+                    "judge_message": text
+                },
+                type:       "POST",
+                dataType:　 "json",
+                success:    function (data){
+                    window.location.href='/DiningServer/getHouseJudge/?house_id='+'{{bill.house_id}}';
+                    // console.log(data);
+                }
+            })
+
+            // window.location.href='/DiningServer/getHouseJudge/?house_id='+'{{bill.house_id}}';
+        });
+
+    </script>
+
+</body>
+</html>

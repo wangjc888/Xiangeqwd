@@ -1,0 +1,14 @@
+<p class="branch-box">分店&nbsp;&nbsp;&nbsp;
+    <select name="house_name" id="house_name-id" form="addForm">
+        {% for item in house_list %}
+            <option value="{{ item }}">{{ item }}</option>
+        {% endfor %}
+    </select>
+</p>
+<p class="fication-box">分类&nbsp;&nbsp;&nbsp;
+    <select name="category_id" id="category_id" form="addForm">
+        {% for item2 in category_list%}
+            <option value="{{ item2.id }}">{{ item2.name }}</option>
+        {% endfor %}
+    </select>
+</p>

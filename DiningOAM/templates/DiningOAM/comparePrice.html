@@ -1,0 +1,34 @@
+{#<!doctype html>#}
+{#<html>#}
+{#<head>#}
+{% load staticfiles %}
+{#<meta charset="utf-8">#}
+{#<title>登陆框</title>#}
+{#<link rel="stylesheet" type="text/css" href="{% static 'DiningOAM/css/style.css' %}">#}
+{#<link rel="stylesheet" type="text/css" href="{% static 'DiningOAM/css/store.css' %}">#}
+{#<script type="text/javascript" src="{% static 'DiningOAM/js/jquery-1.7.1.min.js' %}"></script>#}
+{#</head>#}
+{#<body>#}
+<div class="right01"><img src="{% static 'DiningOAM/images/04.gif' %}" /> 管理员 &gt; <span>价格对比</span></div>
+<table border="1" id="comparePrice">
+    <thead>
+        <tr>
+            <th></th>
+            {% for item in house_list %}
+            <th scope="col">{{ item }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for key in price_list %}
+            <tr>
+                <th scope="row">{{ key.meal_name }}</th>
+                {% for price in key.price %}
+                    <td>{{ price }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{#</body>#}
+{#</html>#}

@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+<head>
+{% load staticfiles %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>我的订单</title>
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/dom.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/fopage.css' %}">
+</head>
+
+<body>
+
+    <div class="box-all">
+        
+        <ul class="all-box">
+            <!-- 未付款的数据 -->
+        {% for bill in bills %}
+            {% if bill.bill_state == 0 %}
+            <li class="fo-li" id='{{bill.id}}'>
+                <div class="all-store">
+                    <p>{{ bill.house.name }}</p>
+                    <img src="{% static 'DiningServer/images/index/rit.png' %}">
+                    <p>家家专送</p>
+                    <img src="{% static 'DiningServer/images/shopping/2.png' %}" class="fo-bbtn">
+                </div>
+                <div class="all-ct"  id='{{bill.id}}'>
+                    <p class="all-cont">
+                        {% if bill.meals|length > 1 %}
+                        <span>{{ bill.meals.0.meal_name }}等</span>
+                        {% else %}
+                        <span>{{ bill.meals.0.meal_name }}</span>
+                        {% endif %}
+                        <span>{{ bill.add_time|date:"Y-m-j G:i" }}</span>
+                        <span>￥{{ bill.all_fee }}</span>
+                        <span>待付款</span>
+                    </p>
+                </div>
+
+                <div class="all-cb">
+                    <span class="all-pay"><a href="http://xiangeqwd.9xi.com/DiningServer/createOrder/?bill_id={{bill.id}}&amp;sum={{bill.all_fee}}">去付款</a></span>
+                    <span class="all-com">去评价</span>
+                </div>
+
+                <div class="fo-disb">
+                    <div class="fo-bg"></div>
+                    <div class="fo-jid">
+                        <p class="jid-p">是否确认删除该订单？</p>
+                        <p class="fo-yes">删除</p>
+                        <p class="jid-i"></p>
+                        <p class="fo-no">取消</p>
+                    </div>
+                </div>
+
+            </li>
+
+            <!-- 已付款的数据 -->
+            {% elif bill.bill_state != 0  %}
+            <li class="fo-li" id='{{bill.id}}'>
+                <div class="all-store">
+                    <p>{{ bill.house.name }}</p>
+                    <img src="{% static 'DiningServer/images/index/rit.png' %}">
+                    <p>家家专送</p>
+                    <img src="{% static 'DiningServer/images/shopping/2.png' %}" class="fo-bbtn">
+                </div>
+                <div class="all-ct"  id='{{bill.id}}'>
+                    <p class="all-cont">
+                        {% if bill.meals|length > 1 %}
+                        <span>{{ bill.meals.0.meal_name }}等</span>
+                        {% else %}
+                        <span>{{ bill.meals.0.meal_name }}</span>
+                        {% endif %}
+                        <span>{{ bill.add_time|date:"Y-m-j G:i" }}</span>
+                        <span>￥{{ bill.all_fee }}</span>
+                        <span>已付款</span>
+                    </p>
+                </div>
+
+                <div class="all-cb">
+                    <span class="all-pay2">已付款</span>
+                    {% if bill.bill_state == 5 %}
+                    <span class="all-com2" style="background:#ccc;">已评价</span>
+                    {% else %}
+                    <span class="all-com2"><a href="http://xiangeqwd.9xi.com/DiningServer/judgeMeal/?bill_id={{bill.id}}">去评价</a></span>
+                    {% endif %}
+                </div>
+                
+                <div class="fo-disb">
+                    <div class="fo-bg"></div>
+                    <div class="fo-jid">
+                        <p class="jid-p">是否确认删除该订单？</p>
+                        <p class="fo-yes">删除</p>
+                        <p class="jid-i"></p>
+                        <p class="fo-no">取消</p>
+                    </div>
+                </div>
+
+            </li>
+            {% endif %}
+        {% empty %}
+        <li></li> 
+        {% endfor %}
+
+
+        </ul>
+        <div style="width:4rem; height:.6rem;"></div>
+        <!-- 跳转按钮 -->
+        <div class="pos-fixed">
+            <a class="pos-ordering"  href="http://xiangeqwd.9xi.com/DiningServer/index/">
+                <img src="{% static 'DiningServer/images/index/log1.png' %}" class="post-bg">
+                <p class="pos-size">订餐</p>
+            </a>
+
+            <a  class="pos-order" href="http://xiangeqwd.9xi.com/DiningServer/getOrdersByType/">
+                <img src="{% static 'DiningServer/images/index/log2a.png' %}" class="post-bg2">
+                <p class="pos-size2">订单</p>
+            </a>
+
+            <a class="pos-page" href="http://xiangeqwd.9xi.com/DiningServer/listMyDetailInfoPage/">
+                <img src="{% static 'DiningServer/images/index/log3.png' %}" class="post-bg3">
+                <p class="pos-size">地址</p>
+            </a>
+
+        </div>
+
+    </div>
+
+<script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/fastclick.js' %}"></script>
+    <script>
+        $('.all-ct').on('click',function(){
+            window.location.href='http://xiangeqwd.9xi.com/DiningServer/getBillDetail/?bill_id='+$(this).attr('id');
+
+        });
+    </script>
+    <script>
+        var oBbtn = $('.fo-bbtn');
+        var oDiv = $('.fo-li');
+        var aDisb = $('.fo-disb');
+        var oYes = $('.fo-yes');
+        var oNo = $('.fo-no');
+
+        oBbtn.each(function(index){
+            $(this).on("click",function(){
+                aDisb.eq(index).show();
+                oYes.each(function(i){
+                    $(this).on("click",function(){
+                        oDiv.eq(i).remove();
+                        $.ajax({
+                            url:    "/DiningServer/getOrdersByType/",
+                            data:{
+                                "method": 'delete',
+                                "bill_id": oDiv.eq(i).attr("id")
+                            },
+                            type:   "POST",
+                            dataType:   "json",
+                            success: function(data){
+
+                            }
+                        })
+                    });
+                });
+                oNo.each(function(i){
+                    $(this).on("click",function(){
+                        aDisb.eq(i).hide();
+                    });
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>

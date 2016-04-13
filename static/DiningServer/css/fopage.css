@@ -1,0 +1,204 @@
+.box-fopage{
+	width: 4rem;
+	font-size: .15rem;
+}
+
+.fo-li{
+	width: 4rem;
+}
+
+.fo-div,.fo-div2{
+	width: 3.8rem;
+	margin: 0 auto .1rem;
+	padding-top: .1rem;
+}
+
+.fo-div2{
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
+
+.fo-size{
+	font-size: .2rem;
+}
+
+em{
+	font-style: normal;
+}
+
+.fo-em2.fo-tc{
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
+.fo-em2.fo-bbtn{
+	position: relative;
+	top: 0;
+	right: 0;
+}
+
+.fo-em2{
+	position: relative;
+	top: 0;
+	right: .3rem;
+}
+
+.fo-abtn{
+	margin-right: .4rem;
+}
+
+.fo-imga{
+	width: .2rem;
+	position: absolute;
+	top: .12rem;
+	left: 2.05rem;
+}
+
+.fo-imgb{
+	width: .2rem;
+	position: absolute;
+	top: .1rem;
+	left: 2.8rem;
+}
+
+
+.fo-p{
+	font-size: .175rem;
+	color: #d7d7d7;
+	margin-top: .1rem;
+	margin-bottom: .12rem;
+}
+
+.fo-text{
+	font-style: normal;
+	position: absolute;
+	top: -.05rem;
+	left: 0;
+	padding-left: .25rem;
+	width: 1rem;
+}
+
+.fo-text2{
+	font-style: normal;
+	position: absolute;
+	top: -.05rem;
+	left: 0;
+	padding-left: .25rem;
+	width: 1rem;
+}
+
+.fo-em2{
+	margin-right: .6rem;
+}
+
+.fo-tc{
+	padding-right: 1.7rem;
+}
+
+.fo-bd{
+	width: 4rem;
+	height: .1rem;
+	background: #f0f2f5;
+	border-top:1px solid #e1e1e1;
+	border-bottom:1px solid #e1e1e1;
+}
+
+.fo-tj{
+	width: 4rem;
+	height: .6rem;
+	background: #faba2e;
+	position: fixed;
+	bottom: .5125rem;
+	left: 0;
+	font-size: .2rem;
+}
+
+.fo-tj p{
+	width: 3.6rem;
+	height: .4rem;
+	color: #fff;
+	background: #faba2e;
+	margin:.1rem auto;
+	text-align: center;
+	line-height: .4rem;
+}
+
+.fo-img{
+	width: .2rem;
+	position: absolute;
+	top:-.05rem;
+	left: 0;
+}
+
+.fo-bat{
+	top:-.02rem;
+}
+
+
+
+.fo-box li:last-child{
+	margin-bottom: .5rem;
+}
+
+
+.fo-jid{
+	position: fixed;
+	top: 2.14rem;
+	left: .5rem;
+	width: 3rem;
+	background:#fff;
+	border-radius: 8px;
+	-webkit-border-radius: 8px;
+	z-index: 3;
+}
+
+.fo-bg{
+	width: 4rem;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: black;
+	filter:alpha(opacity=20);  
+    -moz-opacity:0.2;  
+    -khtml-opacity: 0.2;  
+    opacity: 0.2;
+    z-index: 2;
+}
+
+.fo-jid p{
+	height: .45rem;
+	line-height: .45rem;
+	text-align: center;
+	font-size: .15rem;
+}
+
+.fo-jid .jid-p{
+	color: #333;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.fo-jid .fo-yes{
+	color: red;
+}
+
+.fo-jid .fo-no{
+	color: blue;
+}
+
+.fo-jid .jid-i{
+	height: .05rem;
+	background: black;
+	filter:alpha(opacity=20);  
+    -moz-opacity:0.2;  
+    -khtml-opacity: 0.2;  
+    opacity: 0.2;
+    z-index: 2;
+}
+
+.fo-disb{
+	display: none;
+}

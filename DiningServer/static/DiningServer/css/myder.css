@@ -1,0 +1,26 @@
+.dom-tm{
+	margin-top: 0 !important; 
+}
+
+
+.myder-box{
+	font-size: .15rem;
+}
+
+.myder-box p{
+	margin-left: .3rem;
+	line-height: .3rem;
+}
+
+.myder-box p:nth-child(1){
+	margin-top: .1rem;
+}
+
+.dom-mad{
+	margin-top: .3rem;
+	font-size: .2rem;
+	text-align: right;
+	line-height: .4rem;
+	margin-right: .3rem;
+	color: red;
+}

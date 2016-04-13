@@ -1,0 +1,167 @@
+
+input,button,select,textarea{outline:none}
+textarea{resize:none}
+
+.box-branch{
+	width: 4rem;
+	background: #f8f8f6;
+	font-size: .1706875rem;
+	overflow: hidden;
+	height: 100vh;
+}
+
+
+.box-branch div:nth-child(1),.box-branch div:nth-child(3){
+	height: .40625rem;
+	line-height: .40625rem;
+	color: #676767;
+	border-bottom:1px solid #eee;
+	padding-left: .2125rem;
+}
+
+.box-branch div:nth-child(2),.box-branch div:nth-child(4){
+	width: 4rem;
+	background: #fff;
+	border-bottom:1px solid #eee;
+}
+
+.box-bra{
+	width: 3.575rem;
+	margin: 0 auto;
+	position: relative;
+}
+
+
+.box-bra li{
+	height: .53125rem;
+	line-height: .53125rem;
+	position: relative;
+	border-bottom:1px solid #eee;
+}
+
+.box-bra .is-li{
+	border-bottom:none;
+}
+
+#tip{
+	border-bottom: none;
+}
+
+.box-bra li p{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.box-bra li input{
+	position: absolute;
+	top: .15rem;
+	right: 0;
+	width: 2.5rem;
+ 	border: none;
+}
+
+
+.box-bra li:last-child{
+	border: none;
+}
+
+.bra-btn{
+	width: 3.575rem;
+	height: .428125rem;
+	background: #faba2e;
+	color: #fff;
+	text-align: center;
+	line-height: .428125rem;
+	font-size: .1706875rem;
+	margin: .25rem auto 0;
+	border-radius: .0875rem;
+	-webkit-border-radius: .0875rem;
+}
+
+.submit-box{
+    margin: .25rem auto;
+    width: 3.5rem;
+    height: .5rem;
+}
+.data-submit{
+    width: 100%;
+    height: 100%;
+    background:#f8b62c;
+    text-align: center;
+    border-radius: none;
+    -webkit-border-radius: none;
+    -moz-border-radius: none;
+    border: 1px solid #faad0e;
+    color: #fff;
+    display: block;
+    font-size: .175rem;
+}
+
+input[type=submit]{
+	-webkit-appearance:none;
+	outline:none;
+}
+
+.por-ac{
+	position: relative;
+}
+
+
+
+.por-ac #por-a0 em{
+	font-style: normal;
+}
+
+#por-a0a{
+	position: absolute;
+	top: .025rem;
+	left: 1.3rem;
+	border: none;
+	width: 0;
+}
+
+#por-a0{
+	position: absolute;
+	top: .2rem;
+	left: 1rem;
+	border: none;
+	width: .2rem;
+	height: .2rem; 
+}
+
+#por-a1{
+	position: absolute;
+	top: .2rem;
+	left: 1.7rem;
+	z-index: 100;
+	width: .2rem;
+	height: .2rem;
+}
+
+#por-a1a{
+	position: absolute;
+	top: .025rem;
+	left: 2rem;
+	border: none;
+	z-index: 100;
+}
+
+
+.area-change{
+	position: absolute;
+	top: .15rem;
+	right: 0;
+	border: none;
+	width: 2.5rem;
+	font-size: .15rem;
+}
+
+#msh{
+	position: absolute;
+	top: .66rem;
+	right: 0;
+	border: none;
+	width: 2.5rem;
+	font-size: .15rem;
+}

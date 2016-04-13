@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{#<!doctype html>#}
+{#<html>#}
+<head>
+{% load staticfiles %}
+<meta charset="utf-8">
+<title>订单推送系统</title>
+<script type="text/javascript" src="{% static 'DiningMealManage/js/jquery-1.7.1.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'DiningMealManage/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningMealManage/css/single.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningMealManage/css/content.css' %}">
+{#<script language="javascript" src="{% static 'DiningMealManage/js/LodopFuncs.js' %}"></script>#}
+{#<embed src="{% static 'DiningMealManage/sound/tishiyin.mp3' %}" autostart=false loop=false hidden="true"></embed>#}<!--加入订单消息提示音-->
+</head>
+
+<body>
+    
+<div class="box" id="box">
+    <!--导航-->
+    <div class="cont-nav clearfix">
+        <p>订单管理系统</p>
+        <a href="#" id="logout">退出</a>
+        <p id="sign-logout">欢迎你,{{ house_name }}</p>
+        <p style="position: absolute;right: 100px;font-size: 16px;"><a style="text-decoration: none" href="/DiningOAM/index/">转到后台管理系统</a></p>
+    </div>
+    <!--订单详情-->
+{#    <div id="menu_order">#}
+    <div id="push-order">
+        {% for item in bill_list %}
+        <div class="cont-box">
+            <p class="cont-top">订单编号：{{ item.id }}</p>
+            <div class="clearfix cont-ct">
+
+            <!--左边内容-->
+                <div class="cont-left">
+                <!--左边标题-->
+                    <div class="cont-tit clearfix">
+                        <div>菜品</div>
+                        <div class="clearfix left-a">
+                            <p>数量</p>
+                            <p>小计（元）</p>
+                        </div>
+                    </div>
+
+                    <!--内容详情-->
+
+                <ul class="cont-ctt">
+                    {% for meal_info in item.meal_detail %}
+                    <li class="ctt-box clearfix">
+                        <div>{{ meal_info.meal_name }}</div>
+                        <div class="clearfix ctt-right">
+                            <p>{{ meal_info.buy_count }}</p>
+                            <p>{{ meal_info.meal_price }}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+
+                <!--价格-->
+                    <div class="cont-tl clearfix">
+                        <p>配送费</p>
+                        <p>5.00</p>
+                    </div>
+
+                    <div class="cont-total clearfix">
+{#                        <p>实际支付：<i>{{ item.bill_totalling }}</i>元</p>#}
+                        <p>实际支付：<i>{{ item.all_fee }}</i>元</p>
+                    </div>
+
+
+                </div>
+            <!--右边内容-->
+                <div class="cont-right">
+                    <p>配送信息</p>
+
+                    <ul class="right-tact">
+                        {% for userinfo in item.user_detail %}
+                        <li>联系人：{{ userinfo.username }} 先生</li>
+                        <li>联系电话：{{ userinfo.phone }}</li>
+                        <li>收货地址：{{ item.user_location }} </li>
+                        <li>下单时间：{{ item.add_time }}</li>
+                        <li>收货时间：尽快送出</li>
+                        {% endfor %}
+                    </ul>
+                    <div class="cont-btn clearfix">
+                        <p  class="btn-on" onClick="javascript:dealOrder('{{ item.house_id }}', '{{ item.id }}','{{ item.all_fee }}', '{{ item.add_time }}' , '0', '{{ item.openid }}')">取消订单</p><!--将订单id传过去-->
+                        <p  class="btn-yes" onClick="javascript:dealOrder('{{ item.house_id }}', '{{ item.id }}','{{ item.all_fee }}', '{{ item.add_time }}', '1', '{{ item.openid }}')">确认订单</p>
+{#                        <p  class="btn-on" onClick="javascript:dealOrder('{{ item.house_id }}', '{{ item.id }}','{{ item.bill_totalling }}', '{{ item.add_time }}' , '0', '{{ item.openid }}')">取消订单</p><!--将订单id传过去-->#}
+{#                        <p  class="btn-yes" onClick="javascript:dealOrder('{{ item.house_id }}', '{{ item.id }}','{{ item.bill_totalling }}', '{{ item.add_time }}', '1', '{{ item.openid }}')">确认订单</p>#}
+                    </div>
+{#                    <div class="cont-btn clearfix">#}
+{#                        <p id="btn-on">取消订单</p>#}
+{#                        <p id="btn-yes">确认订单</p>#}
+{#                    </div>#}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!--订单详情-->
+    {% comment %}
+    <div class="cont-reved clearfix" id="insert-order">
+        <!--已接订单-->
+        <div class="reved-left">
+            <p>已接订单</p>
+            <ul class="left-tt" id="ensure_order">
+                {% for item in sure_list%}
+                <li class="clearfix">
+                    <div>{{ item.bill_id }}</div>
+                    <div>{{ item.total }}</div>
+                    <div>{{ item.add_time }}</div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div id="push_result"></div>
+
+        <!--取消订单-->
+        <div class="reved-right">
+            <p>取消订单</p>
+            <ul class="right-tt" id="cancel_order">
+                {% for item in cancel_list%}
+                <li class="clearfix">
+                    <div>{{ item.bill_id }}</div>
+                    <div>{{ item.total }}</div>
+                    <div>{{ item.add_time }}</div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+    {% endcomment %}
+    <div class="cont-reved clearfix" id="insert-order">
+        <!--已接订单-->
+        <div class="reved-left">
+            <p>已接订单</p>
+            <ul class="left-tt" id="ensure_order">
+                {% for item in order_list %}
+                <li class="clearfix">
+                    <div>{{ item.bill_id }}</div>&nbsp;&nbsp;
+                    <div>{{ item.total }}</div>
+{#                    <a href="" style="float:right; width: 20px; height: 20px; margin-top: 7px; padding-right: 20px;">#}
+{#                        <img src="{% static 'DiningMealManage/images/dayin.png' %}" alt="" style="width: 100%;"/>#}
+{#                    </a>#}
+                    <div style="float:left; margin-left: 25px;">{{ item.add_time }}</div>
+
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div id="push_result"></div>
+
+        <!--取消订单-->
+        <div class="reved-right">
+            <p>取消订单</p>
+            <ul class="right-tt" id="cancel_order">
+                {% for item in order_list%}
+                <li class="clearfix">
+                    <div>{{ item.bill_id }} &nbsp;&nbsp; {{ item.add_time }}</div>
+{#                    <div>{{ item.bill_id }}</div>#}
+{#                    <div>{{ item.total }}</div>#}
+{#                    <div>{{ item.add_time }}</div>#}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+
+{#    </div>#}
+</div>
+
+<script>
+    function _abc(){
+        var oBox = document.getElementById('box');
+	 	var EMBED = document.createElement('EMBED');
+     //   EMBED.setAttribute('src','http://58.30.31.197:9999/gddx.sc.chinaz.com/Files/DownLoad/sound1/201508/6224.wav');
+        EMBED.setAttribute("src","{% static 'DiningMealManage/images/6224.wav'%}");
+        //EMBED.setAttribute("src",'http://xiangeqwd.9xi.com/path/to/media/6224.wav');
+        EMBED.setAttribute('loop','true');
+        EMBED.setAttribute('width','0');
+        EMBED.setAttribute('height','0');
+        oBox.appendChild(EMBED);
+    }
+
+    count();
+    //alert('house_name'+house_name);
+    var timerId;
+    var lastData=4000;//这里对应的是初始加载页面的长度,存在订单时data.length>=4200
+    function count(){
+        timerId = setInterval("scheduled_job()", 5000);//5s刷新一次
+    }
+    function scheduled_job(){
+        //alert('content.html/enter scheduled_job====');
+        $.post('/DiningMealManage/schdule_task/', {}, function (data) {
+            $('#push-order').html(data);
+            //alert('data.length'+data.length+'; lastData:'+lastData);
+            if(lastData < data.length)
+            {
+                //alert('pushOrderPage==============='+lastData+'data.length'+data.length);
+                _abc();
+            }
+            lastData = data.length;
+            //alert('content_lastData:'+lastData);
+        }, 'html');
+    }
+
+    function getCookie(name){
+        var strCookie = document.cookie;
+        var arrCookie = strCookie.split("; ");
+
+        for(var i = 0;i < arrCookie.length;i++){
+            var arr = arrCookie[i].split("=");
+            if(arr[0] == name) return (arr[1]);
+        }
+        return "";
+    }
+{#    window.onload=window.onresize=function(){#}
+{#    };#}
+    $(document).ready(function(){
+        $('#logout').click(function(){
+            if (confirm("您确定要退出登录吗？"))
+            {
+                clearInterval(timerId);
+                top.location = "/DiningMealManage/login/";
+                $.get('/DiningMealManage/logout/',{ }, function (data) {
+                    $('#sign-logout').html(data);
+                }, 'html');
+            }
+            else
+            {
+                return false;
+            }
+        });
+
+        function dealOrder(house_id, bill_id, totalling, add_time, flag, openid){
+            //alert('enter dealOrder');
+            //alert('house_id'+house_id+'; bill_id'+bill_id+';total'+totalling+';add_time'+add_time+';flag'+flag);
+            _data = {
+                'house_id':house_id,
+                'bill_id':bill_id,
+                'flag':flag,
+                'openid':openid
+            };
+
+            $.post('/DiningMealManage/deal_order/', _data, function (data) {
+                $('#push-order').html(data);
+                insertOrder(house_id,flag);
+                //console.log('scheduled_job/pushPage', data);
+                _abc();
+                //将处理完的订单信息插入到下方对应栏
+            }, 'html');
+
+        }
+        function insertOrder(house_id,flag){
+            //alert('enter insertOrder');
+            _data = {
+                'house_id':house_id,
+                'flag':flag//显示当前的是确定还是取消
+            };
+            if( flag == 1)
+            {
+                $.post('/DiningMealManage/insert_order/', _data, function (data) {
+                    $('#ensure_order').html(data);
+                    //console.log('insertOrder', data);
+                }, 'html');
+            }
+            else//取消订单
+            {
+                $.post('/DiningMealManage/insert_order/', _data, function (data) {
+                    $('#cancel_order').html(data);
+                    //console.log('insertOrder', data);
+                }, 'html');
+            }
+
+        }
+        house_id = getCookie('house_id');
+        //alert('house_id:'+house_id);
+        insertOrder(house_id, 1);//进入初始界面，显示订单记录
+        insertOrder(house_id, 0);
+{#        function dealOrder(house_id, bill_id){#}
+{#            //alert('enter dealOrder')#}
+{#            _data = {#}
+{#                'house_id':house_id,#}
+{#                'bill_id':bill_id#}
+{#            }#}
+{#            $.post('/DiningMealManage/deal_order/', _data, function (data) {#}
+{#                $('#push-order').html(data);#}
+{#                console.log('scheduled_job/pushPage', data);#}
+{##}
+{#                //将处理完的订单信息插入到下方对应栏#}
+{#                //重新加载当前未处理的订单到当前页面#}
+{#            }, 'html');#}
+{#        }#}
+    });
+
+    function getOrderDetails(order_id){
+        var _data;
+        _data = {
+            'order_id':order_id
+        };
+        /*
+        $.post('/DiningMealManage/show_order_detail/', _data, function (data) {
+            showDetails(data);
+        }, 'html');*/
+        try{
+            $.post('/DiningMealManage/show_order_detail/', _data, function (data) {
+                showDetails(data);
+            }, 'html');
+        } catch(e){
+            alert(e.name + ": " + e.message);
+        }
+
+    }
+
+    function showDetails(content){
+        var newWin = window.open('', '', 'height=531, width=1200, top=100, left=84, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+        newWin.document.write(content);
+    }
+
+{#    function sureArrive(house_id, bill_id, openid){#}
+{#        alert('enter sureArrive 确认送达部分暂未处理');#}
+{#    }#}
+</script>
+
+<script>
+
+{#    function printPage(){#}
+{#        alert('enter PrintPage=====');#}
+{#        var LODOP;#}
+{#        LODOP=getLodop(document.getElementById('LODOP_OB'),document.getElementById('LODOP_EM'));#}
+{#		LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_表单一");#}
+{#		LODOP.SET_PRINT_STYLE("FontSize",18);#}
+{#		LODOP.SET_PRINT_STYLE("Bold",1);#}
+{#		LODOP.ADD_PRINT_TEXT(50,231,260,39,"打印页面部分内容");#}
+{#		LODOP.ADD_PRINT_HTM(88,200,350,600,document.getElementById("print_order").innerHTML);#}
+{#        LODOP.PREVIEW();#}
+{#    }#}
+
+    function toPrint(order_id){
+        var _data;
+        //alert('toPrint/order_id,'+order_id);
+        _data = {
+            'order_id':order_id
+        };
+        $.post('/DiningMealManage/print_order/', _data, function (data) {
+            //$('#box').html(data);
+            doPrint(data);
+            //printPage();//for test direct print
+        }, 'html');
+    }
+
+    function doPrint(content) {
+        //打开一个新的窗体
+        //alert('deal_record.html/enter in doPrint');
+        var bdhtml=window.document.body.innerHTML;
+        var newWin = window.open('about:blank',"","");
+            //取得id为"order"的<div id="order"></div>之间的内容
+           //将取得的打印内容放入新窗体
+        newWin.document.write(content);
+           //刷新新窗体
+        newWin.document.location.reload();
+      //调用打印功能
+        newWin.print();
+           //打印完毕自动关闭新窗体
+        newWin.close();
+        //alert('end of doPrint');
+        //window.location='/DiningMealManage/pushPage/';
+    }
+</script>
+
+</body>
+</html>

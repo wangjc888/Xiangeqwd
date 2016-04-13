@@ -1,0 +1,62 @@
+
+
+.box-branch{
+	width: 4rem;
+	font-size: .13rem;
+	height: 100vh;
+	background:#f8f8f6;
+}
+
+.box-branch div{
+	width: 4rem;
+	background: #fff;
+	border-bottom: 1px solid #f1f1f1;
+}
+
+.box-branch div p{
+	width: 3.6rem;
+	margin: 0 auto;
+	height: .45rem;
+	line-height: .45rem;
+}
+
+.box-suf{
+	width: 3.6rem;
+	margin: 0 auto;
+}
+
+.box-suf li{
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	border-bottom: 1px solid #f1f1f1;
+	padding-bottom: .2rem;
+	position: relative;
+}
+
+.box-suf li p{
+	height: .45rem;
+	line-height: .45rem;
+}
+
+.box-suf li span{
+	height: .45rem;
+	font-size: .15rem;
+}
+
+.box-suf li p:nth-child(3){
+	position: absolute;
+	top: .2rem;
+	right: 0;
+	width: .185rem;
+	height: .187rem;
+	display: none;
+}
+
+.box-suf li p:nth-child(3){
+	background-size: 100%;
+}
+
+li.on p:nth-child(3){
+	display: block;
+}
