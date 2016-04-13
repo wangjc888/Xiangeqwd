@@ -8,262 +8,511 @@
 <meta content="black" name="apple-mobile-web-app-status-bar-style">
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>家家订餐</title>
+<title>湘鄂情味道</title>
 <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/index.css' %}">
 <link rel="stylesheet" href="{% static 'DiningServer/css/dom.css' %}">
 <script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
-<style>
-    html,body{
-        background: #fff;
-    }
-</style>
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery-2.1.4.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/fastclick.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/iscroll.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/tab.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/details.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/slide.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/star.js' %}"></script>
 </head>
 <body>
-<div class="swiper-position" id="dome1">
-    <div class="positionleft">
-        <span class="position-img"></span>
-        {% if house %}
-            <a href="javascript:;" class="position-text" style="line-height:.353125rem">{{ house.name }}</a>
-        {% else %}
-            <a href="javascript:;" class="position-text">家家订餐</a>
-        {% endif %}
-        <p class="position-paragraph"><a href="http://xiangeqwd.9xi.com/DiningServer/switch/" style=" display: block; line-height: .4rem;">(点击更换门店)</a></p>
-    </div>
-    <div class="positionright">
-        <img src="{% static 'DiningServer/images/index/phone.png' %}" id="btn-phone">
-        <p class="btn-ct">
-            <a href="http://xiangeqwd.9xi.com/DiningServer/getHouseJudge/?house_id={{house.house_id}}"><img src="{% static 'DiningServer/images/index/comorder.png' %}" id="btn-com"><span>评价</span></a>
-        </p>
-    </div>
-</div>
-
-<div class="index-bg"></div>
 
 
-<div class="index-content">
-
-
-    <div class="nav-lf">
-        <ul id="nav">
-            {% for category in categorys %}
-                {% if forloop.first %}
-                    <li data-href="#st{{ forloop.counter}}" class="current"><p id="{{ category.category_id }}">{{ category.category }}</p><b></b></li>
-                {% else %}
-                    <li data-href="#st{{ forloop.counter}}"><p id="{{ category.category_id }}">{{ category.category }}</p><b>1</b></li>
-                {% endif %}
-            {% empty %}
-                <li class="current"><a href="#st1">分类1</a><b>1</b></li>
-                <li><a href="#st2">分类2</a><b>1</b></li>
-                <li><a href="#st3">分类3</a><b>1</b></li>
-                <li><a href="#st4">分类4</a><b>1</b></li>
-            {% endfor %}
-
+    <!-- 跳转链接 -->
+    <div class="box">
+        <ul class="jump" id="jump">
+            <li class="jump-li on">
+                <p></p>
+                <i></i>
+            </li>
+            <li class="jump-li">
+                <p></p>
+                <i></i>
+            </li>
+            <li class="jump-li">
+                <p></p>
+                <i></i>
+            </li>
         </ul>
     </div>
-    <div id="container" class="container">
-      {% for meal_list in meals %}
-      <div class="section" id="st{{ forloop.counter }}">
-      <!--  在这里填充section的内容  -->
 
-         <section class="container-divzw"></section>
-        {% for meal in meal_list %}
-            <div class="prt-lt" id="{{ meal.meal_id }}">
+    <dl id="paging">
+        <!-- 这是首页 -->
+        <li class="box-index on">
 
-                <!-- 图片 -->
-
-                {% if meal.avatar_url %}
-                    <div class="lt-lt">
-                        <a href="/DiningServer/getMealDetail/?meal_id={{meal.meal_id}}&amp;house_id={{house.house_id}}"><img class="lazy-img" data-src="{{ meal.avatar_url }}" src="{% static 'DiningServer/images/index/loading.gif' %}" /></a>
-                        <!-- <a href="javascript:;" class="boxtext"><span>已有<strong>{{ meal.judge_count }}</strong>人评价</span></a> -->
-                    </div>
-                {% else %}
-                    <div class="lt-lt"><img class="lazy-img" src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
-                    <div class="lt-lt"> 
-                        <img class="lazy-img" src="{% static 'DiningServer/images/index/prt_1.jpg' %}">
-                        <a href="javascript:;" class="boxtext"><span>已有<strong>12</strong>人评价</span></a>
-                    </div>
-                {% endif %}
-
-                <div class="lt-ct">
-                    <p>{{ meal.meal_name }}</p>
-                    <p class="pr2">销量<span class="text">{{ meal.sold_count }}</span>份<span>&nbsp;&nbsp;好评14</span></p>
-                    <p class="pr">¥<span class="price">{{ meal.meal_price }}</span></p>
-                </div>
-                <div class="lt-rt">
-                    <p class="di-name" style="display:none;">{{ meal.meal_name }}</p>
-                    <input type="button" class="minus"  value="-">
-                    <input type="text" class="result" value="0" disabled="true">
-                    <input type="button" class="add" value="+">
+            <!-- 头部 -->
+            
+            <div class="index-head">
+                <div>
+                    <p class="head-l">
+                        <a href="jvavscript:;" class="head-l1"></a>
+                        <a href="jvavscript:;" class="head-l2">三里屯SOHO公寓</a>
+                        <i>
+                            <a href="jvavscript:;" class="head-r1"></a>
+                            <a href="jvavscript:;" class="head-r2" id="oneveat"></a>
+                        </i>
+                    </p>
                 </div>
             </div>
-          {% empty %}
-        {% endfor %}
-      </div>
-      {% endfor %}
 
-</div>
-
-        <div class="pos-bg"></div>
-        <div class="pos-phone" id="phone">
-            <p class="pos-pa">联系电话</p>
-            <p class="btn-close" id="btn-close">×</p>   
-            <a href="tel:{{ house.phone }}" class="pos-pt" style="display:block;">{{ house.phone }}</a>
-        </div>
-
-</div>
-<div style="height:1.15rem"></div>
-<div id="footer-box">
-	<div class="ft-lt" id="ft-lt">
-        <img src="{% static 'DiningServer/images/index/shop.png' %}" class="ft-lt-img" id="cart-btn">
-        <p class="footer-p">总计:<span id="total" class="total">0.00元</span><span class="nm">(<label class="share"></label>份)</span></p>
-        <span class="share" id="ft-span"></span>
-    </div>
-    <div class="ft-rt" id="change-success">确认订单</div>
-</div>
-
-
-<!--跳转按钮-->
-<div class="pos-fixed">
-    <a class="pos-ordering"  href="http://xiangeqwd.9xi.com/DiningServer/index/">
-        <img src="{% static 'DiningServer/images/index/log1a.png' %}" class="post-bg">
-        <p class="pos-size2">订餐</p>
-    </a>
-
-    <a  class="pos-order" href="http://xiangeqwd.9xi.com/DiningServer/getOrdersByType/">
-        <img src="{% static 'DiningServer/images/index/log2.png' %}" class="post-bg2">
-        <p class="pos-size">订单</p>
-    </a>
-
-    <a class="pos-page" href="http://xiangeqwd.9xi.com/DiningServer/listMyDetailInfoPage/">
-        <img src="{% static 'DiningServer/images/index/log3.png' %}" class="post-bg3">
-        <p class="pos-size">地址</p>
-    </a>
-
-</div>
-
-<!-- 购物车 -->
-<div class="ft-shop" id="ft-shop">
-    <p class="shop-top">
-        <span><i></i>&nbsp;&nbsp;&nbsp;购物车</span>
-        <span id="shop-clear"><i></i>清空购物车</span>
-    </p>
-    <ul class="shop-ul" id="shop-ul"><!-- 
-        <li>
-            <span><i class="ul-i"></i><i class="ul-meal">营养双拼套餐</i></span>
-            <div class="shop-div">
-                <input type="button" class="minus-a"  value="-">
-                <input type="text" class="result-a" value="0" disabled="true">
-                <input type="button" class="add-a" value="+">
+            <div class="index-head2">
+                <img src="{% static 'DiningServer/images/4.jpg' %}" alt="">
             </div>
-        </li> -->
-    </ul>
-</div>
 
-<script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'DiningServer/js/mobile.js' %}"></script>
-<script type="text/javascript" src="{% static 'DiningServer/js/fastclick.js' %}"></script>
+            <!-- 菜单 -->
+            <div class="index-menu">
+                <div class="menu-div" id="wrapper">
+                    <ul id="menu" class="clearfix">
+                        <li class="menu-li on">全部</li>
+                        <li class="menu-li">面条</li>
+                        <li class="menu-li">米粉</li>
+                        <li class="menu-li">小吃</li>
+                        <li class="menu-li">加菜</li>
+                        <li class="menu-li">馄饨</li>
+                        <li class="menu-li">全部</li>
+                        <li class="menu-li">面条</li>
+                        <li class="menu-li">米粉</li>
+                        <li class="menu-li">小吃</li>
+                        <li class="menu-li">加菜</li>
+                        <li class="menu-li">馄饨</li>
+                    </ul>
+                </div>
+                <p class="menu-img"></p>
+            </div>
 
+            <!-- 菜品 -->
+            <ol id="food">
 
-<script type="text/javascript">
-//图片数组
-var src_list = {
-    {% for meal_list in meals %}
-        {% for item in meal_list %}
-            "{{ item.meals_id }}":"{{ item.avatar_url }}",
-        {% endfor %}
-    {% endfor %}
-};
+                <!-- 全部 -->
+                <li class="index-food on">
+                    
+                    <!-- 这是第一排 -->
+                    <div class="food-f">
 
+                    <!-- 这是左边菜品 -->
+                        <div class="food-fl">
+                            <p class="f-img"></p>
+                            <p class="f-name">营养双拼套餐</p>
+                            <p>销量16份 &nbsp; 好评 26</p>
+                            <p>￥16</p>
+                            <div class="f-button">
+                                <img src="{% static 'DiningServer/images/11.png' %}" alt="">
+                                <p class="f-m">1</p>
+                                <img src="{% static 'DiningServer/images/12.png' %}" alt="">
+                            </div>
 
-//餐厅的电话号码
-{% if house %}
-var phone = {{ house.phone }}
-{% else %}
-var phone = {{ house.phone }}
-{% endif %}
+                            <!-- 商品详情 -->
+                            <div class="food-bg"></div>
+                            <div class="food-sign"></div>
+                            <div class="fodd-details">
+                                <div class="deta-img">
+                                    <img src="{% static 'DiningServer/images/details.jpg' %}" alt="">
+                                </div>
+                                <p>营养双拼套餐</p>
+                                <p>￥16</p>
+                                <p>标准配料，精选食材 ，营养又美味</p>
+                                <p>满足你的味蕾</p>
+                                <p></p>
+                                <p>加入购物车</p>
+                            </div>
+                            <div class="food-close"></div>
 
-</script>
-<script type="text/javascript" src="{% static 'DiningServer/js/indexMain.js' %}"></script>
-<script>
-    $('#btn-phone').on('click',function(){
-        $('#phone').addClass('on');
-        $('.pos-bg').addClass('on');
-        $('.pos-bg').css('z-index','3000');
-        document.body.style.overflow = "hidden";
-    });
+                        </div>
 
-    $('#btn-close').on('click',function(){
-        $('#phone').removeClass("on");
-        $('.pos-bg').removeClass('on');
-        $('.pos-bg').css('z-index','1100');
-        document.body.style.overflow = "auto";
-    });
-</script>
+                    <!-- 这是右边菜品 -->
+                        <div class="food-fl food-fr">
+                            <p class="f-img"></p>
+                            <p class="f-name">营养双拼套餐</p>
+                            <p>销量16份 &nbsp; 好评 26</p>
+                            <p>￥16</p>
+                            <div class="f-button">
+                                <img src="{% static 'DiningServer/images/11.png' %}" alt="">
+                                <p class="f-m">1</p>
+                                <img src="{% static 'DiningServer/images/12.png' %}" alt="">
+                            </div>
+                            
+                            <!-- 商品详情 -->
+                            <div class="food-bg"></div>
+                            <div class="food-sign"></div>
+                            <div class="fodd-details">
+                                <div class="deta-img">
+                                    <img src="{% static 'DiningServer/images/details.jpg' %}" alt="">
+                                </div>
+                                <p>营养双拼</p>
+                                <p>￥16</p>
+                                <p>标准配料，精选食材 ，营养又美味</p>
+                                <p>满足你的味蕾</p>
+                                <p></p>
+                                <p>加入购物车</p>
+                            </div>
+                            <div class="food-close"></div>
 
-<script>
-
-    // $('.add').each(function(index){
-    //     $(this).on('click',function(){
-    //         $('.minus').eq(index).animate({right:'.7rem'});
-    //         $('.result').eq(index).animate({right:'.35rem'});
-    //         $('.minus').eq(index).addClass('on');
-    //         $('.result').eq(index).addClass('on');
-
-    //     });
-    // });
-
-    // $('.minus').each(function(index){
-    //     $(this).on('click',function(){
-    //         var r = $('.result').eq(index).val()-1;
-    //         if ( r == 0) {
-    //             $('.minus').eq(index).removeClass('on');
-    //             $('.result').eq(index).removeClass('on');
-    //             $('.minus').eq(index).animate({right:'0'});
-    //             $('.result').eq(index).animate({right:'0'});
-    //         }
-    //     });
-    // });
-
-    // 购物车
-
-    $('#cart-btn').on('click',function(){
-        var oshare = $('.share').text();
-        if (oshare>=1) {
-            $('#ft-shop').addClass('on');
-            $('#ft-shop').animate({bottom: '1.15rem'});
-            $('.pos-bg').addClass('on');
-            document.body.style.overflow = "hidden";
-        }
-    });
-
-    $('#shop-clear').on('click',function(){
-        $('#ft-shop').removeClass('on');
-        $('#ft-shop').animate({bottom: '0'});  
-        $('.pos-bg').removeClass('on');
-        $('#shop-ul li').remove();
-        $('.total').text('0.00');
-        $('.share').text(0);
-        $('.result').val(0);
-        $('.shop-ul').css('overflow-y','hidden');
-        $('.shop-ul').css('height','100%');
-        document.body.style.overflow = "auto";
-    });
-
-    $('.pos-bg').on('click',function(){
-        $('#ft-shop').removeClass('on');
-        $('#ft-shop').animate({bottom: '0'}); 
-        $('#phone').removeClass("on");
-        $('.pos-bg').removeClass('on');
-        $('.pos-bg').css('z-index','1100'); 
-        document.body.style.overflow = "auto";
-    });
-</script>
+                        </div>
+                    </div>
 
 
+                </li>
+                
+                <!-- 面条1 -->
+                <li class="index-food">面条1</li>
 
-<script type="text/javascript" src="{% static 'DiningServer/js/jquery.unveil.js' %}"></script>
-<script type="text/javascript" src="{% static 'DiningServer/js/navbar2.js' %}"></script>
+                <!-- 米粉 -->
+                <li class="index-food">米粉1</li>
+
+                <!-- 小吃1 -->
+                <li class="index-food">小吃1</li>
+
+                <!-- 加菜1 -->
+                <li class="index-food">加菜1</li>
+
+                <!-- 馄饨1 -->
+                <li class="index-food">馄饨1</li>
+
+                <!-- 全部2 -->
+                <li class="index-food">全部2</li>
+
+                <!-- 面条2 -->
+                <li class="index-food">面条2</li>
+
+                <!-- 米粉2 -->
+                <li class="index-food">米粉2</li>
+
+                <!-- 小吃2 -->
+                <li class="index-food">小吃2</li>
+
+                <!-- 加菜2 -->
+                <li class="index-food">加菜2</li>
+
+                <!-- 馄饨2 -->
+                <li class="index-food">馄饨2</li>
+
+            </ol>
+
+
+
+            <!-- 购物车 -->
+            <div class="index-cart clearfix">
+                <div class="cart-l">
+                    <img src="{% static 'DiningServer/images/15.png' %}" alt="">
+                </div>
+                <div class="cart-r">
+                    <p>总计：<span>￥32</span></p>
+                    <p class="cart-btn">确认订单</p>
+                </div>
+            </div>
+
+
+
+
+            <!-- 电话页面 -->
+
+            <!-- 评价页面 -->
+            <div class="box-see">
+
+                <p class="see-m"></p>
+                <div class="see-t">
+                    <div class="see-fanh"><img src="{% static 'DiningServer/images/left.png' %}" alt=""> &nbsp;<a href="">返回</a></div>
+                    <ul id="see-li">
+                        <li class="eveat on">全部3</li>
+                        <li class="eveat">好评2</li>
+                        <li class="eveat">差评1</li>
+                    </ul>
+                </div>
+
+                <div class="see-b">
+                    <dl id="dom-li">
+                        <!-- 全部11 -->
+                        <li class="see-cont active"> 
+                            <div class="see-ct">
+                                <div class="see-con">
+                                    <img src="{% static 'DiningServer/images/portrait.png' %}" alt="">
+                                    <span>18813092419</span>
+                                    <span>2016-04-10 16:18</span>
+                                    <span>
+                                        <img src="{% static 'DiningServer/images/logaa1.png' %}" alt=""  style="display:none;">
+
+                                        <!-- 评价星星 -->
+                                        <img src="{% static 'DiningServer/images/logaa1.png' %}" alt="">
+                                        <img src="{% static 'DiningServer/images/logaa1.png' %}" alt="">
+                                        <img src="{% static 'DiningServer/images/logaa1.png' %}" alt="">
+                                        <img src="{% static 'DiningServer/images/logaa1.png' %}" alt="">
+                                        <img src="{% static 'DiningServer/images/logaa1.png' %}" alt="">
+                                    </span>
+                                </div>
+                                <p>这是一段全部的评论文字</p>
+                            </div>
+                        </li>
+                        
+                        <!-- 好评11 -->
+
+                        <li class="see-cont">    
+                            <div class="see-ct">
+                                <div class="see-con">
+                                    <img src="{% static 'DiningServer/images/portrait.png' %}" alt="">
+                                    <span>18813092419</span>
+                                    <span>2016-04-10 16:18</span>
+                                    <span>
+                                        <img src="{% static 'DiningServer/images/logaa1.png' %}" alt=""  style="display:none;">
+
+                                        <!-- 评价星星 -->
+                                        <img src="{% static 'DiningServer/images/logaa1.png' %}" alt="">
+                                        <img src="{% static 'DiningServer/images/logaa1.png' %}" alt="">
+                                        <img src="{% static 'DiningServer/images/logaa1.png' %}" alt="">
+                                        <img src="{% static 'DiningServer/images/logaa1.png' %}" alt="">
+                                        <img src="{% static 'DiningServer/images/logaa1.png' %}" alt="">
+                                    </span>
+                                </div>
+                                <p>这是一段好评的评论文字</p>
+                            </div>
+                        </li>
+
+                        
+                        <!-- 差评0 -->
+
+                        <li class="see-cont"> 
+                            <div class="see-ct">
+                                <div class="see-con">
+                                    <img src="{% static 'DiningServer/images/portrait.png' %}" alt="">
+                                    <span>18813092419</span>
+                                    <span>2016-04-10 16:18</span>
+                                    <span>
+                                        <img src="{% static 'DiningServer/images/logaa1.png' %}" alt=""  style="display:none;">
+
+                                        <!-- 评价星星 -->
+                                        <img src="{% static 'DiningServer/images/logaa1.png' %}" alt="">
+                                        <img src="{% static 'DiningServer/images/logaa1.png' %}" alt="">
+                                        <img src="{% static 'DiningServer/images/logaa2.png' %}" alt="">
+                                        <img src="{% static 'DiningServer/images/logaa2.png' %}" alt="">
+                                        <img src="{% static 'DiningServer/images/logaa2.png' %}" alt="">
+                                    </span>
+                                </div>
+                                <p>这是一段差评的评论文字</p>
+                            </div>
+                        </li>
+                    </dl>
+
+                </div>              
+
+            </div>
+
+
+        </li>
+
+        
+        <!-- 这是订单页面 -->
+        <li class="box-index">
+
+            <!-- 订单分类 -->
+            <div class="box-order">
+                <div class="order-box clearfix" id="order-box">
+                    <p class="order-p">未付款<i></i></p>
+                    <p class="order-p on">配送中<i></i></p>
+                    <p class="order-p">已完成<i></i></p>
+                </div>
+            </div>
+
+
+
+            <!-- 订单标题 -->
+            <div class="box-cont">
+                <ul id="order-cont">
+
+                    <li class="cont-li">
+                        
+                        <!-- 一条数据 -->
+                        <div class="cont-div">  
+                            <div class="cont-top clearfix">
+                                <p>燕南店（福田区燕南中42号） <img src="{% static 'DiningServer/images/right.png' %}"></p>
+                                <p>家家专送</p>
+                            </div>
+
+                            <div class="cont-in clearfix">
+                                <p>营养双拼套餐等2件商品</p>
+                                <p>￥36</p>
+                                <p>2016/3/1 15:04</p>
+                                <p>待付款</p>  
+                            </div>
+
+                            <div class="cont-bot">去付款</div>
+                        </div>
+
+                    </li>
+
+
+                    <li class="cont-li on">
+                        
+                        <div class="cont-onder">
+                            <div class="onder-bg"></div>
+                            <div class="onder-text">您还没有订单哦</div>
+                            <a href=""><div class="onder-fanh">去下单</div></a>
+                        </div>
+                    
+                    </li>
+
+                    <li class="cont-li">
+                        <!-- 一条数据 -->
+                        <div class="cont-div">  
+                            <div class="cont-top clearfix">
+                                <p>燕南店（福田区燕南中42号） <img src="{% static 'DiningServer/images/right.png' %}"></p>
+                                <p>家家专送</p>
+                            </div>
+
+                            <div class="cont-in clearfix">
+                                <p>营养双拼套餐等2件商品</p>
+                                <p>￥36</p>
+                                <p>2016/3/1 15:04</p>
+                                <p>已完成</p>  
+                            </div>
+
+                            <div class="cont-bot to-eval">去评价</div>
+                        </div>
+
+                    </li>
+
+
+                </ul>
+            </div>
+
+
+
+            <div class="box-com">
+        
+                <div class="com-box">
+                    <div class="com-fanh">
+                        <a href=""><img src="{% static 'DiningServer/images/left.png' %}" alt=""></a>
+                        <p class="com-fanhp">评价</p>
+                    </div>
+                    <p class="com-kong"></p>
+
+                    <div class="com-cont">
+                        <div class="cont-text">
+                            <p>外卖骑士 &nbsp;&nbsp;配送员</p>
+                            <p>送达时间 &nbsp;&nbsp;16:36</p>
+                            <p>配送服务&nbsp;&nbsp;
+                                <span class="js-star js-star1">
+                                    <i class="off"></i>
+                                    <i class="off"></i>
+                                    <i class="off"></i>
+                                    <i class="off"></i>
+                                    <i class="off"></i>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="com-tlt">商品评价</div>
+                    <div class="com-cont2">
+                        <div class="com-text2">商品质量&nbsp;&nbsp;
+                            <span class="js-star js-star2">
+                                <i class="off"></i>
+                                <i class="off"></i>
+                                <i class="off"></i>
+                                <i class="off"></i>
+                                <i class="off"></i>
+                            </span>
+                        </div>  
+                    </div>
+
+                    <ul class="com-key">
+                        <li>营养双拼套餐</li>
+                    </ul>
+
+                    <div class="com-tlt">商品评价</div>
+                    <div class="com-tat">
+                        <textarea name="" id="" cols="30" rows="10" class="com-tc" placeholder="（至少输入10字）您的意见很重要!
+        来点评一下吧"></textarea>
+                    </div>
+
+
+                </div>
+
+
+                <div class="com-btn" id="js-submit">提交评价</div>              
+            </div>
+
+
+        </li>
+
+        <!-- 这是地址页面 -->
+        <li class="box-index">地址</li>
+
+    </dl>
+
+
+    <script>
+        // 去评价
+
+        var oToEval = $("div.to-eval");
+        var oBoxOrder = $("div.box-order");
+        var oBoxCont = $("div.box-cont");
+        var oBoxCom = $("div.box-com");
+        oToEval.each(function(){
+            $(this).on('click',function(){
+                $(this).addClass("on");
+                oBoxOrder.hide();
+                oBoxCont.hide();
+                oBoxCom.show();
+            });
+        });
+
+
+        var $star = $('.js-star');
+        $star.each(function (index,ele){
+            operated($(ele).find('.off'));
+        })
+
+        $('#js-submit').on('click',function (){
+            var star1 = $('.js-star1').find('.on').length;
+            var star2 = $('.js-star2').find('.on').length;
+            var text = $('.com-tat textarea').val().trim();
+            if (star1==0 || star2==0 ) {
+                alert('请打分');
+                return false;
+            }
+
+            $.ajax({
+                url:    "/DiningServer/judgeMeal/",
+                data:{
+                    "bill_id": '{{bill.id}}',
+                    "judge_meal":    star1,
+                    "judge_speed":   star2,
+                    "judge_message": text
+                },
+                type:       "POST",
+                dataType:　 "json",
+                success:    function (data){
+                    // window.location.href='/DiningServer/getHouseJudge/?house_id='+'{{bill.house_id}}';
+                    // console.log(data);
+                }
+            })
+
+            oBoxOrder.show();
+            oBoxCont.show();
+            oBoxCom.hide();
+
+            // window.location.href='/DiningServer/getHouseJudge/?house_id='+'{{bill.house_id}}';
+        });
+
+    </script>
+
+    <script>
+
+        $("#oneveat").on('click',function(){
+            $('div.index-head').hide();
+            $('div.index-head2').hide();
+            $('div.index-menu').hide();
+            $('ol#food').hide();
+            $('div.box-see').show();
+        });
+
+    </script>
+
 
 </body>
 </html>

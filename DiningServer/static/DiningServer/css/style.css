@@ -1,22 +1,39 @@
-/* CSS Document */
-a{-webkit-touch-callout: none;}
-body,div,ol,ul,li,dl,dt,dd,h1,h2,h3,h4,h5,h6,p,form,fieldset,legend,input,button{ margin:0; padding:0;}
-html {  width: 100%; font-family: 'Heiti SC', 'Microsoft YaHei'; font-size: 100px; outline: 0; -webkit-text-size-adjust:none;}
-body {  width:100%; margin: 0; -webkit-user-select: none; position: relative; background-color:#fff;}
-a:hover,a:link,a:visited,a{ color:inherit; text-decoration:none;}
-ul,li{list-style:none}
-footer{ position:fixed; bottom:0; width:4rem; height:0.45rem; line-height:0.45rem; background-color:#ECECEC;}
-footer .ft-lt{ float:left; width:2.749rem; height:0.45rem;}
-footer .ft-lt p{ float:left; margin-left:0.15rem; font-size:0.18rem;}
+@charset "utf-8";
+/*==============================css reset start==============================*/
+*{margin:0;padding:0;}
+article,aside,footer,header,hgroup,nav,section,audio,canvas,video {display: block;}
+html {font-size:100px;font-family: 'Microsoft Yahei','微软雅黑';color:#3e3a39; }
+body{font-size: 0.3rem;}
+textarea {resize:none;}
+img {border:0;vertical-align: top;}
+ul,ol,li {list-style:none;}
+a{text-decoration:none;outline:none; color: #3e3a39;-webkit-tap-highlight-color: transparent;}
+button,input,select,textarea {vertical-align:middle;outline:none;}
+button,input[type="button"],input[type="reset"],input[type="submit"] {cursor:pointer;}
+.clearfix:after,.clearfix:before{content: "";display: table;}
+.clearfix:after{clear: both;}
+.clearfix{zoom:1;}
+.ellipsis { white-space:nowrap; text-overflow:ellipsis; overflow:hidden}
+.fl{float:left;}
+.fr{float:right;}
+.hide{display:none;}
+.show{display: block;}
 
-footer .ft-rt{ float:left; width:1.25rem; height:0.45rem; background-color:#39B867;}
-footer .ft-rt p{ font-size:0.2rem; color:#fff; text-align:center;}
-.jq{ width:3rem; height:0.8rem;}
-.pd6{ padding:6px 0;}
-.pd20{ padding-left:20px}
-.mt20{ margin-top: .15rem;}
-
-input[type=button], input[type=submit], input[type=file], button { cursor: pointer; -webkit-appearance: none; }
-a {text-decoration:none;}
-a:hover {text-decoration:underline;}
-a:link {text-decoration: none; color:black;}
+body{
+	max-width: 640px;
+	margin: 0 auto;
+}
+/*旧版safari不允许设置search,替换成普通框*/
+input[type="search"]{-webkit-appearance: textfield;}
+/*ios 长按出现的默认菜单，禁止*/
+a[href^="javascript"]{-webkit-touch-callout: none;}
+/* 去除iphone ipad 设备默认按钮样式 */
+input[type="button"], input[type="submit"], input[type="reset"] {
+  -webkit-appearance: none;
+  border-radius: 0; 
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0;
+}
